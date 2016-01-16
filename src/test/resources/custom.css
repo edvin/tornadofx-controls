@@ -1,0 +1,23 @@
+.list-menu {
+    -fx-padding: 8;
+    -fx-graphic-fixed-size: 2.5em;
+    -fx-background-color: #3da0e3;
+}
+
+.list-item {
+    -fx-padding: 20;
+    -fx-pref-width: 180;
+    -fx-background-color: #3da0e3;
+}
+
+.list-item * {
+    -fx-fill: #fff;
+}
+
+.list-item:active {
+    -fx-background-color: #1e88cf !important;
+}
+
+.list-item:hover {
+    -fx-background-color: #4aa7e5;
+}
