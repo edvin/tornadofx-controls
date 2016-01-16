@@ -27,17 +27,21 @@ public class ListMenu extends Control {
 
 	private StyleableProperty<Number> graphicFixedSize = FACTORY.createStyleableNumberProperty(this, "graphicFixedSize", "-fx-graphic-fixed-size", ListMenu::graphicFixedSizeProperty);
 
-	private Property<ListItem> active = new SimpleObjectProperty<>(this, "active");
+	private Property<ListItem> active = new SimpleObjectProperty<ListItem>(this, "active") {
+		public void set(ListItem item) {
+			ListItem previouslyActive = get();
+			if (item == previouslyActive)
+				return;
+
+			if (previouslyActive != null)
+				previouslyActive.pseudoClassStateChanged(ACTIVE_PSEUDOCLASS_STATE, false);
+
+			item.pseudoClassStateChanged(ACTIVE_PSEUDOCLASS_STATE, true);
+			super.set(item);
+		}
+	};
 
 	public void setActive(ListItem item) {
-		ListItem previouslyActive = getActive();
-		if (item == previouslyActive)
-			return;
-
-		if (previouslyActive != null)
-			previouslyActive.pseudoClassStateChanged(ACTIVE_PSEUDOCLASS_STATE, false);
-
-		item.pseudoClassStateChanged(ACTIVE_PSEUDOCLASS_STATE, true);
 		active.setValue(item);
 	}
 
