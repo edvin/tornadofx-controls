@@ -36,11 +36,6 @@ public class ListItem extends Control {
 		return new ListItemSkin(this);
 	}
 
-	public void activate() {
-		ListMenu menu = (ListMenu) getParent();
-		menu.setActive(this);
-	}
-
 	public void needsLayout() {
 		setNeedsLayout(true);
 		requestLayout();

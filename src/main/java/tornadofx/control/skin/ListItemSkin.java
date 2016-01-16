@@ -25,7 +25,8 @@ public class ListItemSkin extends SkinBase<ListItem> {
 
 		control.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
 			control.requestFocus();
-			control.activate();
+			ListMenu menu = (ListMenu) control.getParent();
+			menu.setActive(control);
 		});
 	}
 
