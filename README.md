@@ -8,8 +8,9 @@ A menu that behaves and looks like a typical `ul`/`li` based *HTML5* menu.
  
  - Configurable `orientation` and `iconPosition`.
  - Track user selection with `active` observable property
+ - Pseudo state `active` for CSS styling
  - Custom css property `-fx-graphic-fixed-size` to align icons of different sizes, which are often the case for font based icons.
- - [ListMenuDemo](       https://github.com/edvin/tornadofx-controls/blob/master/src/test/java/tornadofx/control/test/ListMenuDemo.java) available in the source code
+ - [ListMenuDemo](       https://github.com/edvin/tornadofx-controls/blob/master/src/test/java/tornadofx/control/test/ListMenuDemo.java) source code
  - [Custom CSS Example] (https://github.com/edvin/tornadofx-controls/blob/master/src/test/resources/custom.css)
 
 ![ListMenuDemo](/screenshots/listmenu.png?raw=true "ListMenuDemo")
