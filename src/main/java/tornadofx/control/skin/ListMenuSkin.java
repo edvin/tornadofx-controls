@@ -49,17 +49,25 @@ public class ListMenuSkin extends SkinBase<ListMenu> {
 	}
 
 	protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
+		double prefWidth;
+
 		if (getSkinnable().getOrientation() == Orientation.VERTICAL)
-			return biggest(n -> n.prefWidth(height)) + leftInset + rightInset;
+			prefWidth = biggest(n -> n.prefWidth(height)) + leftInset + rightInset;
 		else
-			return acc(n -> n.prefWidth(height)) + leftInset + rightInset;
+			prefWidth = acc(n -> n.prefWidth(height)) + leftInset + rightInset;
+
+		return Math.max(prefWidth, getSkinnable().getPrefWidth());
 	}
 
 	protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
+		double prefHeight;
+
 		if (getSkinnable().getOrientation() == Orientation.VERTICAL)
-			return acc(n -> n.prefHeight(width)) + topInset + bottomInset;
+			prefHeight = acc(n -> n.prefHeight(width)) + topInset + bottomInset;
 		else
-			return biggest(n -> n.prefHeight(width)) + topInset + bottomInset;
+			prefHeight = biggest(n -> n.prefHeight(width)) + topInset + bottomInset;
+
+		return Math.max(prefHeight, getSkinnable().getPrefHeight());
 	}
 
 	protected double computeMaxWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {

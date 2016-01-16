@@ -2,6 +2,7 @@
     -fx-padding: 8;
     -fx-graphic-fixed-size: 2.5em;
     -fx-background-color: #3da0e3;
+    -fx-pref-height: 9999;
 }
 
 .list-item {

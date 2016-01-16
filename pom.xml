@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.tornado</groupId>
-    <artifactId>torandofx-controls</artifactId>
+    <artifactId>tornadofx-controls</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

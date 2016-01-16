@@ -1,5 +1,6 @@
 package tornadofx.control;
 
+import javafx.beans.DefaultProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -10,16 +11,17 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
+import javafx.scene.layout.Region;
 import tornadofx.control.skin.ListMenuSkin;
 
-import java.util.Collections;
 import java.util.List;
 
+@DefaultProperty("children")
 public class ListMenu extends Control {
 	private static final PseudoClass ACTIVE_PSEUDOCLASS_STATE =
 		PseudoClass.getPseudoClass("active");
 
-	private static final StyleablePropertyFactory<ListMenu> FACTORY = new StyleablePropertyFactory<>(Collections.emptyList());
+	private static final StyleablePropertyFactory<ListMenu> FACTORY = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
 
 	public final StyleableProperty<Number> graphicFixedSizeProperty() {
 		return graphicFixedSize;
@@ -94,9 +96,13 @@ public class ListMenu extends Control {
 		this.iconPosition.set(iconPosition);
 	}
 
-	public ListMenu(ListItem... items) {
+	public ListMenu() {
 		getStyleClass().add("list-menu");
 		setFocusTraversable(true);
+	}
+
+	public ListMenu(ListItem... items) {
+		this();
 		if (items != null)
 			getChildren().addAll(items);
 	}
