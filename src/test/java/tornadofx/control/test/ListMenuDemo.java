@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import tornadofx.control.ListItem;
 import tornadofx.control.ListMenu;
 
@@ -44,14 +45,8 @@ public class ListMenuDemo extends Application {
 		StringBinding description = Bindings.createStringBinding(() -> String.format("Currently selected: %s", menu.getActive().getText()), menu.activeProperty());
 		selectedDescription.textProperty().bind(description);
 
-		BorderPane borderpane = new BorderPane(menu);
-		borderpane.setTop(new VBox(titleLabel, selectedDescription));
-		borderpane.getTop().setStyle("-fx-alignment: center");
-		borderpane.setPadding(new Insets(20));
-
 		ComboBox<Orientation> orientation = new ComboBox<>(FXCollections.observableArrayList(Orientation.values()));
 		orientation.valueProperty().bindBidirectional(menu.orientationProperty());
-		borderpane.setBottom(orientation);
 
 		ComboBox<Side> iconPos = new ComboBox<>(FXCollections.observableArrayList(Side.values()));
 		iconPos.valueProperty().bindBidirectional(menu.iconPositionProperty());
@@ -64,11 +59,17 @@ public class ListMenuDemo extends Application {
 				scene.getStylesheets().remove(getCustomStylesheet());
 		});
 
-		HBox bottomMenu = new HBox(10, new Label("Orientation"), orientation, new Label("Icon Position"), iconPos, customCss);
-		bottomMenu.setAlignment(Pos.CENTER);
-		borderpane.setBottom(bottomMenu);
+		HBox options = new HBox(10, new Label("Orientation"), orientation, new Label("Icon Position"), iconPos, customCss);
+		options.setAlignment(Pos.CENTER);
+
+		BorderPane borderpane = new BorderPane(menu);
+		borderpane.setStyle("-fx-background-color: #ffffff");
+		borderpane.setTop(new VBox(10.0, titleLabel, options, selectedDescription));
+		borderpane.getTop().setStyle("-fx-alignment: center");
+		borderpane.setPadding(new Insets(20));
 
 		scene = new Scene(borderpane, 600, 500);
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
 		stage.show();
 	}

@@ -13,7 +13,7 @@ A menu that behaves and looks like a typical `ul`/`li` based *HTML5* menu.
  - [ListMenuDemo](       https://github.com/edvin/tornadofx-controls/blob/master/src/test/java/tornadofx/control/test/ListMenuDemo.java) source code
  - [Custom CSS Example] (https://github.com/edvin/tornadofx-controls/blob/master/src/test/resources/custom.css)
 
-![ListMenuDemo](/screenshots/listmenu.png?raw=true "ListMenuDemo")
+![ListMenuDemo](/screenshots/listmenu.gif?raw=true "ListMenuDemo")
 
 ```java
 ListMenu menu = new ListMenu(
