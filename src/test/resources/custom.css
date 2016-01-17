@@ -14,10 +14,10 @@
     -fx-fill: #fff;
 }
 
-.list-item:active {
-    -fx-background-color: #1e88cf !important;
-}
-
 .list-item:hover {
     -fx-background-color: #4aa7e5;
+}
+
+.list-item:active {
+    -fx-background-color: #1e88cf;
 }
