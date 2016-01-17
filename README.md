@@ -44,7 +44,7 @@ menu.activeProperty().addListener((observable, oldValue, newValue) -> {
 ### Create with FXML
 
 ```xml
-<ListMenu>
+<ListMenu orientation="VERTICAL" iconPosition="LEFT">
 	<ListItem active="true" text="Contacts">
 		<graphic>
 			<FontAwesomeIconView glyphName="USER"/>
