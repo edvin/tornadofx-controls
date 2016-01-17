@@ -16,7 +16,7 @@ CSS Stylable Controls for JavaFX
 
 A menu that behaves and looks like a typical `ul`/`li` based *HTML5* menu.
 
- ![ListMenuDemo](/screenshots/listmenu.gif?raw=true "ListMenuDemo")
+![ListMenuDemo](/screenshots/listmenu.gif?raw=true "ListMenuDemo")
 
  - Configurable `orientation` and `iconPosition`.
  - Track user selection with `active` observable property
