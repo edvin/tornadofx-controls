@@ -19,6 +19,7 @@ public class MultiSelectDemo extends Application {
 	public void start(Stage stage) throws Exception {
 		MultiSelect<String> control = new MultiSelect<>();
 		control.setHgap(5);
+		control.setVgap(5);
 
 		// Default editor
 		TextField input = new TextField();
