@@ -10,7 +10,6 @@ import java.util.function.Function;
 public class ListMenuSkin extends SkinBase<ListMenu> {
 	public ListMenuSkin(ListMenu control) {
 		super(control);
-
 	}
 
 	private double acc(Function<Node, Double> fn) {
