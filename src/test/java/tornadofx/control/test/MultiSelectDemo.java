@@ -1,7 +1,6 @@
 package tornadofx.control.test;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,12 +9,10 @@ import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tornadofx.control.MultiSelect;
 import tornadofx.control.MultiSelectCell;
-import tornadofx.control.skin.MultiSelectSkin;
 
 public class MultiSelectDemo extends Application {
 
@@ -49,6 +46,7 @@ public class MultiSelectDemo extends Application {
 					int index = control.getChildrenUnmodifiable().indexOf(this);
 					control.getItems().remove(item);
 					control.getChildrenUnmodifiable().get(index).requestFocus();
+
 				});
 
 				button.getItems().add(remove);

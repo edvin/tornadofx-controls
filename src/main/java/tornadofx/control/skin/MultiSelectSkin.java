@@ -1,40 +1,13 @@
 package tornadofx.control.skin;
 
-import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.SkinBase;
 import tornadofx.control.MultiSelect;
-import tornadofx.control.MultiSelectCell;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MultiSelectSkin<E> extends SkinBase<MultiSelect<E>> {
 
 	public MultiSelectSkin(MultiSelect<E> control) {
 		super(control);
-		control.getItems().addListener((ListChangeListener<E>) c -> updateChildren());
-		updateChildren();
-	}
-
-	public void updateChildren() {
-		MultiSelect<E> control = getSkinnable();
-
-		List<Node> newChildren = new ArrayList<>();
-
-		for (int i = 0; i < control.getItems().size(); i++) {
-			E item = control.getItems().get(i);
-			MultiSelectCell<E> cell = control.getCellFactory().call(control);
-			cell.setItem(item);
-			cell.updateItem(item, false);
-			cell.updateIndex(i);
-			newChildren.add(cell);
-		}
-
-		newChildren.add(control.getEditor());
-
-		getChildren().setAll(newChildren);
 	}
 
 	private double getPrefRowHeight() {
@@ -79,16 +52,20 @@ public class MultiSelectSkin<E> extends SkinBase<MultiSelect<E>> {
 				widestRow = rowWidth;
 		}
 
-		return widestRow + leftInset + rightInset;
+		return widestRow + leftInset + rightInset - hgap;
 	}
 
 	protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
+		MultiSelect<E> control = getSkinnable();
+
 		double usedLineWidth = 0;
-		double hgap = getSkinnable().getHgap().doubleValue();
-		double vgap = getSkinnable().getVgap().doubleValue();
+		double hgap = control.getHgap().doubleValue();
+		double vgap = control.getVgap().doubleValue();
 		double prefHeight = getPrefRowHeight();
 
 		double y = prefHeight;
+		if (width == -1 && control.getWidth() > 0)
+			width = control.getWidth();
 
 		for (Node node : getChildren()) {
 			double prefWidth = node.prefWidth(prefHeight);
