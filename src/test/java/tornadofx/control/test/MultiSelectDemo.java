@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tornadofx.control.MultiSelect;
-import tornadofx.control.MultiSelectCell;
 
 public class MultiSelectDemo extends Application {
 
@@ -36,27 +35,24 @@ public class MultiSelectDemo extends Application {
 		});
 		control.setEditor(input);
 
-		control.setCellFactory(param -> new MultiSelectCell<String>() {
-			public void updateItem(String item, boolean empty) {
-				SplitMenuButton button = new SplitMenuButton();
-				button.setText(item);
+		control.setCellFactory((multiSelect, item) -> {
+			SplitMenuButton button = new SplitMenuButton();
+			button.setText(item);
 
-				MenuItem remove = new MenuItem(String.format("Remove %s", item));
-				remove.setOnAction(event -> {
-					int index = control.getChildrenUnmodifiable().indexOf(this);
-					control.getItems().remove(item);
-					control.getChildrenUnmodifiable().get(index).requestFocus();
+			MenuItem remove = new MenuItem(String.format("Remove %s", item));
+			remove.setOnAction(event -> {
+				int index = control.getChildrenUnmodifiable().indexOf(button);
+				control.getItems().remove(item);
+				control.getChildrenUnmodifiable().get(index).requestFocus();
+			});
 
-				});
+			button.getItems().add(remove);
 
-				button.getItems().add(remove);
-
-				button.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-					if (event.getCode() == KeyCode.BACK_SPACE)
-						remove.getOnAction().handle(null);
-				});
-				setGraphic(button);
-			}
+			button.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+				if (event.getCode() == KeyCode.BACK_SPACE)
+					remove.getOnAction().handle(null);
+			});
+			return button;
 		});
 
 		control.getItems().addAll("es@syse.no", "bj@syse.no", "of@syse.no");

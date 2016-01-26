@@ -13,10 +13,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.layout.Region;
-import javafx.util.Callback;
 import tornadofx.control.skin.MultiSelectSkin;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 public final class MultiSelect<E> extends Control {
 	private static final StyleablePropertyFactory<MultiSelect> FACTORY = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
@@ -24,7 +24,7 @@ public final class MultiSelect<E> extends Control {
 	private StyleableProperty<Number> vgap = FACTORY.createStyleableNumberProperty(this, "vgap", "-fx-vgap", MultiSelect::vgapProperty);
 
 	private ObservableList<E> items;
-	private ObjectProperty<Callback<MultiSelect<E>, MultiSelectCell<E>>> cellFactory = new SimpleObjectProperty<>();
+	private ObjectProperty<BiFunction<MultiSelect<E>, E, Node>> cellFactory = new SimpleObjectProperty<>();
 	private ObjectProperty<Node> editor = new SimpleObjectProperty<Node>() {
 		public void set(Node newEditor) {
 			Node old = get();
@@ -78,16 +78,16 @@ public final class MultiSelect<E> extends Control {
 		this.editor.set(editor);
 	}
 
-	public Callback<MultiSelect<E>, MultiSelectCell<E>> getCellFactory() {
+	public BiFunction<MultiSelect<E>, E, Node> getCellFactory() {
 		return cellFactory.get();
 	}
 
-	public ObjectProperty<Callback<MultiSelect<E>, MultiSelectCell<E>>> cellFactoryProperty() {
-		return cellFactory;
+	public void setCellFactory(BiFunction<MultiSelect<E>, E, Node> cellFactory) {
+		this.cellFactory.set(cellFactory);
 	}
 
-	public void setCellFactory(Callback<MultiSelect<E>, MultiSelectCell<E>> cellFactory) {
-		this.cellFactory.set(cellFactory);
+	public ObjectProperty<BiFunction<MultiSelect<E>, E, Node>> cellFactoryProperty() {
+		return cellFactory;
 	}
 
 	public MultiSelect() {
@@ -103,21 +103,13 @@ public final class MultiSelect<E> extends Control {
 				if (c.wasAdded()) {
 					for (int i = 0; i < c.getAddedSize(); i++) {
 						E item = c.getAddedSubList().get(i);
-						MultiSelectCell<E> cell = createCell(i, item);
+						Node cell = getCellFactory().apply(this, item);
 						getChildren().add(i + c.getFrom(), cell);
 					}
 				}
 			}
 		});
 
-	}
-
-	private MultiSelectCell<E> createCell(int index, E item) {
-		MultiSelectCell<E> cell = getCellFactory().call(this);
-		cell.setItem(item);
-		cell.updateItem(item, false);
-		cell.updateIndex(index);
-		return cell;
 	}
 
 	protected Skin<?> createDefaultSkin() {

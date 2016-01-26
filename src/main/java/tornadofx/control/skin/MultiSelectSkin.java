@@ -11,8 +11,7 @@ public class MultiSelectSkin<E> extends SkinBase<MultiSelect<E>> {
 	}
 
 	private double getPrefRowHeight() {
-		MultiSelect<E> control = getSkinnable();
-		double editorHeight = control.getEditor().prefHeight(-1);
+		double editorHeight = getSkinnable().getEditor().prefHeight(-1);
 		if (getChildren().isEmpty())
 			return editorHeight;
 		else
@@ -53,6 +52,10 @@ public class MultiSelectSkin<E> extends SkinBase<MultiSelect<E>> {
 		}
 
 		return widestRow + leftInset + rightInset - hgap;
+	}
+
+	protected double computeMinHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
+		return computePrefHeight(width, topInset, rightInset, bottomInset, leftInset);
 	}
 
 	protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
