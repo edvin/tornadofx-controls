@@ -26,10 +26,6 @@ public final class MultiSelect<E> extends Control {
 		return items;
 	}
 
-	public void addItem(E item) {
-		getItems().add(item);
-	}
-
 	public Number getHgap() {
 		return hgap.getValue();
 	}
@@ -80,9 +76,9 @@ public final class MultiSelect<E> extends Control {
 
 	public MultiSelect() {
 		getStyleClass().add("multi-select");
+		setFocusTraversable(true);
 		items = FXCollections.observableArrayList();
 	}
-
 
 	protected Skin<?> createDefaultSkin() {
 		return new MultiSelectSkin<>(this);

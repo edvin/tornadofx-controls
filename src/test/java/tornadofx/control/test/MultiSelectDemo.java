@@ -1,6 +1,7 @@
 package tornadofx.control.test;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,16 +11,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tornadofx.control.MultiSelect;
 import tornadofx.control.MultiSelectCell;
+import tornadofx.control.skin.MultiSelectSkin;
 
 public class MultiSelectDemo extends Application {
 
 	public void start(Stage stage) throws Exception {
 		MultiSelect<String> control = new MultiSelect<>();
-		control.setHgap(5);
-		control.setVgap(5);
 
 		// Default editor
 		TextField input = new TextField();
@@ -61,8 +62,7 @@ public class MultiSelectDemo extends Application {
 		});
 
 		control.getItems().addAll("es@syse.no", "bj@syse.no", "of@syse.no");
-		BorderPane root = new BorderPane(control);
-		root.setTop(new Label("MultiSelectInputDemo"));
+		VBox root = new VBox(control, new Label("I am under that thing.."));
 
 		stage.setScene(new Scene(root));
 		stage.show();
