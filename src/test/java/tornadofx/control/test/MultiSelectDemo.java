@@ -1,72 +1,68 @@
 package tornadofx.control.test;
 
 import javafx.application.Application;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitMenuButton;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import tornadofx.control.MultiSelect;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MultiSelectDemo extends Application {
+	private static final List<Email> addresses = Arrays.asList(
+		new Email("es@syse.no", "Edvin Syse"),
+		new Email("bj@syse.no", "Bård Johannessen"),
+		new Email("of@syse.no", "Øyvind Frøland")
+	);
 
 	public void start(Stage stage) throws Exception {
-		MultiSelect<String> control = new MultiSelect<>();
+		MultiSelect<Email> multiSelect = new MultiSelect<>();
 
-		// Default editor
-		TextField input = new TextField();
-		input.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-			// Submit value on ENTER or TAB
-			if (event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.TAB) {
-				if (!input.getText().isEmpty()) {
-					control.getItems().add(input.getText());
-					input.setText("");
-				}
+		multiSelect.setConverter(new StringConverter<Email>() {
+			public String toString(Email object) {
+				return object.email;
 			}
 
-			// Tab to previous field on BACKSPACE in blank field
-			if (event.getCode() == KeyCode.BACK_SPACE && input.getText().isEmpty())
-				focusPrevious(control, input);
-		});
-		control.setEditor(input);
-
-		control.setCellFactory((multiSelect, item) -> {
-			SplitMenuButton button = new SplitMenuButton();
-			button.setText(item);
-
-			MenuItem remove = new MenuItem(String.format("Remove %s", item));
-			remove.setOnAction(event -> {
-				int index = control.getChildrenUnmodifiable().indexOf(button);
-				control.getItems().remove(item);
-				control.getChildrenUnmodifiable().get(index).requestFocus();
-			});
-
-			button.getItems().add(remove);
-
-			button.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-				if (event.getCode() == KeyCode.BACK_SPACE)
-					remove.getOnAction().handle(null);
-			});
-			return button;
+			public Email fromString(String string) {
+				return new Email(string, null);
+			}
 		});
 
-		control.getItems().addAll("es@syse.no", "bj@syse.no", "of@syse.no");
-		VBox root = new VBox(control, new Label("I am under that thing.."));
+		multiSelect.getItems().addAll(addresses);
 
-		stage.setScene(new Scene(root));
+		stage.setScene(new Scene(multiSelect, 600, 400));
 		stage.show();
 	}
 
-	private void focusPrevious(MultiSelect<String> control, Node thisNode) {
-		int index = control.getChildrenUnmodifiable().indexOf(thisNode);
-		if (index > 0) {
-			Node previous = control.getChildrenUnmodifiable().get(index - 1);
-			previous.requestFocus();
+
+	static class Email {
+		private String email;
+		private String name;
+
+		public Email(String email, String name) {
+			this.email = email;
+			this.name = name;
+		}
+
+		public String toString() {
+			return name == null ? email : name;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
 		}
 	}
 }
