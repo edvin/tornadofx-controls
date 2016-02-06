@@ -21,7 +21,7 @@ public class MultiSelectDemo extends Application {
 
 		multiSelect.setConverter(new StringConverter<Email>() {
 			public String toString(Email object) {
-				return object.email;
+				return object.getEmail();
 			}
 
 			public Email fromString(String string) {
@@ -35,34 +35,4 @@ public class MultiSelectDemo extends Application {
 		stage.show();
 	}
 
-
-	static class Email {
-		private String email;
-		private String name;
-
-		public Email(String email, String name) {
-			this.email = email;
-			this.name = name;
-		}
-
-		public String toString() {
-			return name == null ? email : name;
-		}
-
-		public String getEmail() {
-			return email;
-		}
-
-		public void setEmail(String email) {
-			this.email = email;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-	}
 }

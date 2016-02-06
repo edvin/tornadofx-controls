@@ -1,0 +1,26 @@
+.navi-select .visual {
+    -fx-border-radius: 3 0 0 3;
+    -fx-background-radius: 3 0 0 3;
+}
+
+.navi-select .edit-button {
+    -fx-background-radius: 0;
+}
+
+.navi-select .edit-button .icon {
+    -fx-background-color: #1e88cf;
+    -fx-min-width: 16;
+    -fx-max-width: 16;
+    -fx-shape: "M8.011 13.655l-1.657 4.252 4.179-1.73-2.522-2.522zM20.141 4.573l-0.53-0.53c-0.585-0.586-1.535-0.586-2.121 0l-1.061 1.060 2.651 2.652 1.061-1.061c0.587-0.586 0.587-1.536 0-2.122zM8.095 13.438l0.38-0.38 2.651 2.651 7.425-7.425-2.651-2.651 0.53-0.531-8.335 8.335zM17.253 19.503l-12.769 0.005 0.002-12.769 8.941-0.003 1.401-1.485h-11.104c-0.414 0-0.75 0.335-0.75 0.75v14.25c0 0.415 0.336 0.75 0.75 0.75h14.25c0.415 0 0.75-0.335 0.75-0.75v-10.543l-1.511 1.483 0.041 8.314z";
+}
+
+.navi-select .goto-button {
+    -fx-background-radius: 0 3 3 0;
+}
+
+.navi-select .goto-button .icon {
+    -fx-background-color: #1e88cf;
+    -fx-min-width: 16;
+    -fx-max-width: 16;
+    -fx-shape: "M15 18h-12v-11.955l3-0.045v-3h-6v18h18v-7.5h-3v4.5zM9 3l3 3-4.5 4.5 3 3 4.5-4.5 3 3v-9h-9z";
+}
