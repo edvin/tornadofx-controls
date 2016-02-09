@@ -62,3 +62,34 @@ menu.activeProperty().addListener((observable, oldValue, newValue) -> {
 	</ListItem>
 </ListMenu>
 ```
+
+## LeanPropertyValueFactory
+
+Fancy having public fields for your JavaFX properties instead of public methods in your model objects?
+This PropertyValueFactory allows you to use these fields with a TableView:
+
+```java
+public class Customer {
+	public field idProperty = SimpleObjectProperty<Integer>();
+	public field nameProperty = SimpleObjectProperty<String>();
+	// Getters and setters if you want :)
+}
+```
+
+```xml
+<TableView>
+	<columns>
+		<TableColumn text="Id">
+			<cellValueFactory>
+				<LeanPropertyValueFactory property="id"/>
+			</cellValueFactory>
+		</TableColumn>
+		<TableColumn text="Name">
+			<cellValueFactory>
+				<LeanPropertyValueFactory property="name"/>
+			</cellValueFactory>
+		</TableColumn>
+	</columns>
+</TableView>
+
+```
