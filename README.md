@@ -62,6 +62,55 @@ menu.activeProperty().addListener((observable, oldValue, newValue) -> {
 	</ListItem>
 </ListMenu>
 ```
+## Form layout
+
+![Form](/screenshots/form.png?raw=true "Form")
+
+A CSS stylable Form layout that is very convenient to use both with FXML and in code.
+ 
+### FXML Example
+ 
+```xml
+<Form>
+    <Fieldset text="Contact Information" inputGrow="SOMETIMES">
+        <Field text="Id">
+            <TextField />
+        </Field>
+        <Field text="Username">
+            <TextField />
+        </Field>
+        <Field text="Zip/City">
+            <TextField minWidth="80" maxWidth="80" />
+            <TextField />
+        </Field>
+        <Field>
+            <Button text="Save"/>
+        </Field>
+    </Fieldset>
+</Form> 
+```
+ 
+### Java Example
+ 
+```java
+Form form = new Form();
+
+Fieldset contactInfo = form.fieldset("Contact Information");
+
+contactInfo.field("Id", new TextField());
+contactInfo.field("Username", new TextField());
+
+TextField zipInput = new TextField();
+zipInput.setMinWidth(80);
+zipInput.setMaxWidth(80);
+contactInfo.field("Zip/City", zipInput, new TextField());
+
+contactInfo.field(new Button("Save"));
+```
+
+### CSS
+
+Look at the included [CSS Stylesheet](blob/master/src/main/resources/tornadofx/control/form.css) for styling tips.
 
 ## UnitConverter for TextField (kMGTPE)
 

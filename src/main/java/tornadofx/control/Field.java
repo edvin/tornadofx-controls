@@ -1,22 +1,35 @@
 package tornadofx.control;
 
 import javafx.beans.DefaultProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.Skin;
 import javafx.scene.layout.HBox;
-import tornadofx.Fieldset;
-import tornadofx.control.skin.FieldSkin;
 
 @DefaultProperty("inputs")
 public class Field extends Control {
-    private LabelContainer labelContainer = new LabelContainer();
+	private SimpleStringProperty textProperty = new SimpleStringProperty();
+	private Label label = new Label();
+	private LabelContainer labelContainer = new LabelContainer(label);
     private InputContainer inputContainer = new InputContainer();
     private ObservableList<Node> inputs;
 
+	LabelContainer getLabelContainer() {
+		return labelContainer;
+	}
+
+	public Field(String text, Node... inputs) {
+		this();
+		setText(text);
+		if (inputs != null) getInputContainer().getChildren().addAll(inputs);
+	}
+
     public Field() {
         getStyleClass().add("field");
+	    label.textProperty().bind(textProperty);
         inputs = inputContainer.getChildren();
         getChildren().addAll(labelContainer, inputContainer);
     }
@@ -30,8 +43,9 @@ public class Field extends Control {
     }
 
     public class LabelContainer extends HBox {
-        public LabelContainer() {
-            getStyleClass().add("label-container");
+        public LabelContainer(Label label) {
+	        getChildren().add(label);
+	        getStyleClass().add("label-container");
         }
     }
 
@@ -41,10 +55,6 @@ public class Field extends Control {
         }
     }
 
-    public LabelContainer getLabelContainer() {
-        return labelContainer;
-    }
-
     public InputContainer getInputContainer() {
         return inputContainer;
     }
@@ -52,4 +62,16 @@ public class Field extends Control {
     public ObservableList<Node> getInputs() {
         return inputs;
     }
+
+	public String getText() {
+		return textProperty.get();
+	}
+
+	public SimpleStringProperty textProperty() {
+		return textProperty;
+	}
+
+	public void setText(String text) {
+		this.textProperty.set(text);
+	}
 }

@@ -1,16 +1,19 @@
 package tornadofx.control;
 
 import javafx.scene.layout.VBox;
-import tornadofx.Fieldset;
 
 import java.util.stream.Stream;
 
 public class Form extends VBox {
 
-    public double getLabelContainerWidth() {
+	public Form() {
+		getStyleClass().add("form");
+	}
+
+	public double getLabelContainerWidth() {
         return getFieldsets().flatMap(Fieldset::getFields)
-                .map(Field::getInputContainer)
-                .mapToDouble(Field.InputContainer::getPrefWidth)
+                .map(Field::getLabelContainer)
+                .mapToDouble(f -> f.prefWidth(-1))
                 .max()
                 .orElse(0);
     }
@@ -20,4 +23,20 @@ public class Form extends VBox {
                 .filter(c -> c instanceof Fieldset)
                 .map(c -> (Fieldset) c);
     }
+
+	public String getUserAgentStylesheet() {
+		return ListMenu.class.getResource("form.css").toExternalForm();
+	}
+
+	public Fieldset fieldset(String text) {
+		Fieldset fieldset = new Fieldset(text);
+		getChildren().add(fieldset);
+		return fieldset;
+	}
+
+	public Fieldset fieldset() {
+		Fieldset fieldset = new Fieldset();
+		getChildren().add(fieldset);
+		return fieldset;
+	}
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import tornadofx.control.*?>
+<Form xmlns="http://javafx.com/javafx/null">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Fieldset text="Contact Information" inputGrow="SOMETIMES">
+        <Field text="Id">
+            <TextField text="555" />
+        </Field>
+        <Field text="Username">
+            <TextField text="john@doe.com" />
+        </Field>
+        <Field text="Zip/City">
+            <TextField minWidth="80" maxWidth="80" text="10001"/>
+            <TextField text="New York"/>
+        </Field>
+        <Field>
+            <Button text="Save"/>
+        </Field>
+    </Fieldset>
+</Form>
