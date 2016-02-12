@@ -110,7 +110,7 @@ contactInfo.field(new Button("Save"));
 
 ### CSS
 
-Look at the included [CSS Stylesheet](blob/master/src/main/resources/tornadofx/control/form.css) for styling tips.
+Look at the included [CSS Stylesheet](src/main/resources/tornadofx/control/form.css) for styling tips.
 
 ## UnitConverter for TextField (kMGTPE)
 
