@@ -110,7 +110,18 @@ contactInfo.field(new Button("Save"));
 
 ### CSS
 
-Look at the included [CSS Stylesheet](https://github.com/edvin/tornadofx-controls/blob/master/src/main/resources/tornadofx/control/form.css) for styling tips.
+Use the default [CSS Stylesheet](https://github.com/edvin/tornadofx-controls/blob/master/src/main/resources/tornadofx/control/form.css)
+as a starting point. The substructure of a `Form` is described below.
+
+#### Substructure
+
+
+- form - VBox
+	- fieldset - VBox
+		- legend - Label
+		- field - Field
+			- label-container - HBox
+			- input-container - HBox
 
 ## UnitConverter for TextField (kMGTPE)
 
