@@ -121,7 +121,9 @@ as a starting point. The substructure of a `Form` is described below.
 		- legend - Label
 		- field - Field
 			- label-container - HBox
+				- label - Label
 			- input-container - HBox
+				- arbitrary input components
 
 ## UnitConverter for TextField (kMGTPE)
 
