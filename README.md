@@ -8,7 +8,7 @@ CSS Stylable Controls for JavaFX
 <dependency>
 	<groupId>no.tornado</groupId>
 	<artifactId>tornadofx-controls</artifactId>
-	<version>1.0</version>
+	<version>1.0.2</version>
 </dependency>
 ```
 
