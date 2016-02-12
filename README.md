@@ -65,14 +65,14 @@ menu.activeProperty().addListener((observable, oldValue, newValue) -> {
 
 ## UnitConverter for TextField (kMGTPE)
 
-Add bind a `Long` property to a TextField with `UnitConverter` and you can write *2G* instead of 2147483648.
+Bind a `Long` property to a TextField with `UnitConverter` and you can write *2G* instead of 2147483648.
 
 ```java
 TextField storageInput = new TextField()
 storageInput.textProperty().bindBidirectional(product.sizeProperty(), new UnitConverter())
 ```
 
-Optionally configure `binary (true/false)` and `separator` char between number and unit (default "").
+Optionally configure `binary (true/false)` and `separator` (default "").
 
 ## LeanPropertyValueFactory
 
