@@ -63,6 +63,17 @@ menu.activeProperty().addListener((observable, oldValue, newValue) -> {
 </ListMenu>
 ```
 
+## UnitConverter for TextField (kMGTPE)
+
+Add bind a `Long` property to a TextField with `UnitConverter` and you can write *2G* instead of 2147483648.
+
+```java
+TextField storageInput = new TextField()
+storageInput.textProperty().bindBidirectional(product.sizeProperty(), new UnitConverter())
+```
+
+Optionally configure `binary (true/false)` and `separator` char between number and unit (default "").
+
 ## LeanPropertyValueFactory
 
 Fancy having public fields for your JavaFX properties instead of public methods in your model objects?
