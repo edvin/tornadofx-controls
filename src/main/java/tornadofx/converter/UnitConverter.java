@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class UnitConverter extends StringConverter<Long> {
     private static final String units = "kMGTPE";
-    private StringProperty separatorProperty = new SimpleStringProperty(" ");
+    private StringProperty separatorProperty = new SimpleStringProperty("");
     private BooleanProperty binaryProperty = new SimpleBooleanProperty(this, "binary", false);
 
     private static final Pattern ValueWithUnit = Pattern.compile("(\\d+)\\s*([kmgtpe]?)$");
