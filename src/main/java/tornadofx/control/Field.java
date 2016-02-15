@@ -63,7 +63,11 @@ public class Field extends Control {
         return inputs;
     }
 
-	public String getText() {
+    public void setInputs(ObservableList<Node> inputs) {
+        this.inputs = inputs;
+    }
+
+    public String getText() {
 		return textProperty.get();
 	}
 
