@@ -1,7 +1,6 @@
 package tornadofx.control;
 
 import javafx.beans.DefaultProperty;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -30,8 +29,8 @@ public class Fieldset extends VBox {
 
     private SimpleStringProperty text = new SimpleStringProperty();
     private ObjectProperty<Priority> inputGrow = new SimpleObjectProperty<>(SOMETIMES);
-    private ObjectProperty<Orientation> orientation = new SimpleObjectProperty<>(HORIZONTAL);
-    private ObjectProperty<Double> wrapWidth = new SimpleObjectProperty<>();
+	private ObjectProperty<Orientation> orientation = new SimpleObjectProperty<>();
+	private ObjectProperty<Double> wrapWidth = new SimpleObjectProperty<>();
 
     public Fieldset(String text) {
         this();
@@ -92,6 +91,9 @@ public class Fieldset extends VBox {
                 field.getInputContainer().getChildren().forEach(this::configureHgrow);
             });
         });
+
+	    // Default
+	    setOrientation(HORIZONTAL);
     }
 
     private void syncOrientationState() {

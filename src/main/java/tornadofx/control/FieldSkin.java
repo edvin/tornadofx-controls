@@ -45,14 +45,13 @@ public class FieldSkin extends SkinBase<Field> {
         Fieldset fieldset = field.getFieldset();
 
         double labelWidth = field.getFieldset().getForm().getLabelContainerWidth();
-
-        if (fieldset.getOrientation() == HORIZONTAL) {
+	    if (fieldset.getOrientation() == HORIZONTAL) {
             field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), contentHeight);
 
             double inputX = contentX + labelWidth;
             double inputWidth = contentWidth - labelWidth;
 
-            field.getInputContainer().resizeRelocate(inputX, contentY, inputWidth, contentHeight);
+	        field.getInputContainer().resizeRelocate(inputX, contentY, inputWidth, contentHeight);
         } else {
             double labelPrefHeight = field.getLabelContainer().prefHeight(-1);
             double labelHeight = Math.min(labelPrefHeight, contentHeight);

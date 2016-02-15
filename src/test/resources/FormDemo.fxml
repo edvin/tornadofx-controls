@@ -30,7 +30,7 @@
             </Field>
         </Fieldset>
 
-        <Fieldset text="Contact Information Vertical" orientation="VERTICAL">
+        <Fieldset text="Contact Information Vertical" orientation="HORIZONTAL">
             <Field text="Id">
                 <TextField text="555"/>
             </Field>
