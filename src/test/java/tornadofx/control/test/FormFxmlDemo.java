@@ -6,10 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import tornadofx.control.Fieldset;
-import tornadofx.control.Form;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
 public class FormFxmlDemo extends Application {
 
 	public void start(Stage stage) throws Exception {
-		Form form = FXMLLoader.load(FormFxmlDemo.class.getResource("/FormDemo.fxml"));
+		StackPane root = FXMLLoader.load(FormFxmlDemo.class.getResource("/FormDemo.fxml"));
 
-		Scene scene = new Scene(form);
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
