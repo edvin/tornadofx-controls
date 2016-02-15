@@ -1,6 +1,13 @@
-.form .label-container {
+.form .fieldset .label-container {
     -fx-alignment: center-left;
+}
+
+.form .fieldset:horizontal .label-container {
     -fx-padding: 0 15 0 0;
+}
+
+.form .fieldset:vertical .label-container {
+    -fx-padding: 0 0 3 0;
 }
 
 .form .input-container {

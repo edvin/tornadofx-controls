@@ -3,10 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import tornadofx.control.*?>
-<Form xmlns="http://javafx.com/javafx/null">
+<Form xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" spacing="20" fx:controller="tornadofx.control.test.FormFxmlDemo$FormController">
     <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
-    <Fieldset text="Contact Information" inputGrow="SOMETIMES">
+    <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset">
         <Field text="Id">
             <TextField text="555" />
         </Field>
@@ -15,10 +15,30 @@
         </Field>
         <Field text="Zip/City">
             <TextField minWidth="80" maxWidth="80" text="10001"/>
-            <TextField text="New York"/>
+            <TextField prefWidth="300" text="New York"/>
+        </Field>
+        <Field text="Wrap at">
+            <TextField fx:id="wrapAt" />
         </Field>
         <Field>
             <Button text="Save"/>
         </Field>
     </Fieldset>
+
+    <Fieldset text="Contact Information Vertical" orientation="VERTICAL">
+        <Field text="Id">
+            <TextField text="555" />
+        </Field>
+        <Field text="Username">
+            <TextField text="john@doe.com" />
+        </Field>
+        <Field text="Zip/City">
+            <TextField minWidth="80" maxWidth="80" text="10001"/>
+            <TextField prefWidth="300" text="New York"/>
+        </Field>
+        <Field>
+            <Button text="Save"/>
+        </Field>
+    </Fieldset>
+
 </Form>
