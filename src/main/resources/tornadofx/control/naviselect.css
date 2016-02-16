@@ -1,6 +1,7 @@
 .navi-select .visual {
     -fx-border-radius: 3 0 0 3;
     -fx-background-radius: 3 0 0 3;
+    -fx-focus-traversable: false;
 }
 
 .navi-select .edit-button {
