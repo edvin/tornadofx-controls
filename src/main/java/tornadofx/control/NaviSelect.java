@@ -1,5 +1,6 @@
 package tornadofx.control;
 
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -11,20 +12,33 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+import java.util.function.Function;
+
+import static javafx.beans.binding.Bindings.createStringBinding;
+
 public class NaviSelect<T> extends HBox {
 	private Button editButton = new Button();
 	private TextField visual = new TextField();
 	private Button gotoButton = new Button();
+    private Function<T, String> defaultVisualConverter = t -> { String value = t == null ? null : t.toString(); return value == null ? "" : value; };
+    private ObjectProperty<Function<T, String>> visualConverter = new SimpleObjectProperty<Function<T, String>>(defaultVisualConverter) {
+        public void set(Function<T, String> newValue) {
+            super.set(newValue);
+            visualBinding.invalidate();
+        }
+    };
+    private ObjectProperty<T> value = new SimpleObjectProperty<>();
+    private StringBinding visualBinding = createStringBinding(() -> getVisualConverter().apply(getValue()), valueProperty());
 
-	private ObjectProperty<T> valueProperty = new SimpleObjectProperty<>();
 
-	public NaviSelect() {
+    public NaviSelect() {
 		setFocusTraversable(true);
 
 		getStyleClass().add("navi-select");
 		visual.setEditable(false);
 		visual.getStyleClass().add("visual");
-		visual.textProperty().bind(valueProperty.asString());
+
+        visual.textProperty().bind(visualBinding);
         HBox.setHgrow(visual, Priority.ALWAYS);
 
 		Pane editButtonGraphic = new Pane();
@@ -51,9 +65,9 @@ public class NaviSelect<T> extends HBox {
 		gotoButton.setOnAction(gotoHandler);
 	}
 
-	public ObjectProperty<T> valueProperty() { return valueProperty; }
-	public T getValue() { return valueProperty.get(); }
-	public void setValue(T value) { this.valueProperty.set(value); }
+	public ObjectProperty<T> valueProperty() { return value; }
+	public T getValue() { return value.get(); }
+	public void setValue(T value) { this.value.set(value); }
 
 	public TextField getVisual() {
 		return visual;
@@ -83,5 +97,17 @@ public class NaviSelect<T> extends HBox {
 	public String getUserAgentStylesheet() {
 		return ListMenu.class.getResource("naviselect.css").toExternalForm();
 	}
+
+    public Function<T, String> getVisualConverter() {
+        return visualConverter.get();
+    }
+
+    public ObjectProperty<Function<T, String>> visualConverterProperty() {
+        return visualConverter;
+    }
+
+    public void setVisualConverter(Function<T, String> visualConverter) {
+        this.visualConverter.set(visualConverter);
+    }
 
 }
