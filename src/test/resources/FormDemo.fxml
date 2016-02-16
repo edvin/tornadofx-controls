@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <?import tornadofx.control.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <StackPane xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="tornadofx.control.test.FormFxmlDemo$FormController">
     <padding>
@@ -12,6 +13,9 @@
 
     <Form fx:id="form" spacing="20">
         <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset">
+            <icon>
+                <FontAwesomeIconView glyphName="USER" glyphSize="20"/>
+            </icon>
             <Field text="Id">
                 <TextField text="555"/>
             </Field>
@@ -31,6 +35,9 @@
         </Fieldset>
 
         <Fieldset text="Contact Information Vertical" orientation="HORIZONTAL">
+            <icon>
+                <FontAwesomeIconView glyphName="USER" glyphSize="20"/>
+            </icon>
             <Field text="Id">
                 <TextField text="555"/>
             </Field>

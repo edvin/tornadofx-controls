@@ -31,6 +31,8 @@ public class Fieldset extends VBox {
     private ObjectProperty<Priority> inputGrow = new SimpleObjectProperty<>(SOMETIMES);
 	private ObjectProperty<Orientation> orientation = new SimpleObjectProperty<>();
 	private ObjectProperty<Double> wrapWidth = new SimpleObjectProperty<>();
+    private ObjectProperty<Node> icon = new SimpleObjectProperty<>();
+    private Label legend;
 
     public Fieldset(String text) {
         this();
@@ -64,6 +66,11 @@ public class Fieldset extends VBox {
         textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) addLegend();
         });
+
+        // Add legend when icon is populated
+        iconProperty().addListener(((observable1, oldValue1, newValue) -> {
+            if (newValue != null) addLegend();
+        }));
 
         // Make sure input children gets the configured HBox.hgrow property
         getChildren().addListener((ListChangeListener<Node>) c -> {
@@ -120,10 +127,14 @@ public class Fieldset extends VBox {
     }
 
     private void addLegend() {
-        Label legend = new Label();
-        legend.textProperty().bind(textProperty());
-        legend.getStyleClass().add("legend");
-        getChildren().add(0, legend);
+        if (legend == null) {
+            legend = new Label();
+            legend.textProperty().bind(textProperty());
+            legend.getStyleClass().add("legend");
+            getChildren().add(0, legend);
+        }
+
+        legend.setGraphic(getIcon());
     }
 
     private void configureHgrow(Node input) {
@@ -186,5 +197,17 @@ public class Fieldset extends VBox {
 
     public void setWrapWidth(Double wrapWidth) {
         this.wrapWidth.set(wrapWidth);
+    }
+
+    public Node getIcon() {
+        return icon.get();
+    }
+
+    public ObjectProperty<Node> iconProperty() {
+        return icon;
+    }
+
+    public void setIcon(Node icon) {
+        this.icon.set(icon);
     }
 }
