@@ -27,3 +27,7 @@
     -fx-font-size: 1.2em;
     -fx-padding: 0 0 5 0;
 }
+
+.form .fieldset .legend {
+    -fx-graphic-text-gap: 10;
+}
