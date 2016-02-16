@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 
 public class NaviSelect<T> extends HBox {
 	private Button editButton = new Button();
@@ -24,6 +25,7 @@ public class NaviSelect<T> extends HBox {
 		visual.setEditable(false);
 		visual.getStyleClass().add("visual");
 		visual.textProperty().bind(valueProperty.asString());
+        HBox.setHgrow(visual, Priority.ALWAYS);
 
 		Pane editButtonGraphic = new Pane();
 		editButtonGraphic.getStyleClass().add("icon");
