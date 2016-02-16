@@ -10,6 +10,10 @@
     -fx-padding: 0 0 3 0;
 }
 
+.form .fieldset .input-container {
+    -fx-alignment: baseline-left;
+}
+
 .form .fieldset {
     -fx-padding: 0 0 15 0;
 }

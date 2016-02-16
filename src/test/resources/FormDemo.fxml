@@ -12,7 +12,7 @@
     </padding>
 
     <Form fx:id="form" spacing="20">
-        <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset">
+        <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset" inputGrow="NEVER">
             <icon>
                 <FontAwesomeIconView glyphName="USER" glyphSize="20"/>
             </icon>
