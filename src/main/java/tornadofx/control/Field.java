@@ -28,6 +28,7 @@ public class Field extends Control {
 	}
 
     public Field() {
+        setFocusTraversable(false);
         getStyleClass().add("field");
 	    label.textProperty().bind(textProperty);
         inputs = inputContainer.getChildren();
