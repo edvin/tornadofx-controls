@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import tornadofx.control.NaviSelect;
@@ -65,6 +66,7 @@ public class NaviSelectDemo extends Application {
 		});
 		dialog.setScene(new Scene(listview));
 		dialog.setWidth(navi.getWidth());
+		dialog.initModality(Modality.APPLICATION_MODAL);
 		dialog.setHeight(100);
 		dialog.showAndWait();
 	}
