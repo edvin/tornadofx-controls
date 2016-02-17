@@ -32,11 +32,7 @@ public class NaviSelect<T> extends HBox {
 
 
     public NaviSelect() {
-		setFocusTraversable(true);
-
 		getStyleClass().add("navi-select");
-		visual.setEditable(false);
-	    visual.setFocusTraversable(false);
 		visual.getStyleClass().add("visual");
 
         visual.textProperty().bind(visualBinding);
