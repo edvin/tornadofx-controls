@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>Track dirty states for a collection of properties, with undo feature to rollback changes.</p>
@@ -46,7 +47,7 @@ import java.util.Map;
  *
  * <pre>
  *     // Undo changes
- *     undoButton.setOnAction(event -> dirtyState.reset());
+ *     undoButton.setOnAction(event -&gt; dirtyState.reset());
  *
  *     // Show undo button when changes are performed
  *     undoButton.visibleProperty().bind(dirtyState);
@@ -117,13 +118,24 @@ public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
 	private class DirtyListener implements ChangeListener {
         @SuppressWarnings("SuspiciousMethodCalls")
         public void changed(ObservableValue property, Object oldValue, Object newValue) {
-	        if (!dirtyProperties.contains(property)) {
+	        if (dirtyProperties.contains(property)) {
+		        // Remove dirty state if newValue equals inititalValue
+		        if (Objects.equals(initialValues.get(property), newValue))
+			        dirtyProperties.remove(property);
+
+		        // If no other properties dirty, remove dirty state
+		        if (dirtyProperties.isEmpty() && isDirty())
+			        setValue(false);
+	        } else {
+		        // Configure initital value and add to dirty property list
 		        initialValues.put((Property) property, oldValue);
 		        dirtyProperties.add((Property) property);
+
+		        // Only trigger dirty state change if previously clean
+		        if (!isDirty())
+			        setValue(true);
 	        }
 
-			if (!isDirty())
-				setValue(true);
         }
     }
 
