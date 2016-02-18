@@ -29,7 +29,7 @@
             <Field text="Wrap at width">
                 <TextField fx:id="wrapAt"/>
             </Field>
-            <Field>
+            <Field text="">
                 <Button text="Save" />
             </Field>
         </Fieldset>
