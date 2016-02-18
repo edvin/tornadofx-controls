@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <?import tornadofx.control.*?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <StackPane xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="tornadofx.control.test.FormFxmlDemo$FormController">
     <padding>
@@ -12,7 +12,7 @@
     </padding>
 
     <Form fx:id="form" spacing="20">
-        <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset" inputGrow="NEVER">
+        <Fieldset text="Contact Information Responsive" wrapWidth="300" fx:id="responsiveFieldset">
             <icon>
                 <FontAwesomeIconView glyphName="USER" glyphSize="20"/>
             </icon>
@@ -26,11 +26,11 @@
                 <TextField minWidth="80" maxWidth="80" text="10001"/>
                 <TextField prefWidth="300" text="New York"/>
             </Field>
-            <Field text="Wrap at">
+            <Field text="Wrap at width">
                 <TextField fx:id="wrapAt"/>
             </Field>
             <Field>
-                <Button text="Save"/>
+                <Button text="Save" />
             </Field>
         </Fieldset>
 

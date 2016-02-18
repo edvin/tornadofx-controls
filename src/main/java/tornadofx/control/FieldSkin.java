@@ -36,8 +36,12 @@ public class FieldSkin extends SkinBase<Field> {
         if (fieldset.getOrientation() == HORIZONTAL)
             return Math.max(labelHeight, inputHeight) + topInset + bottomInset;
 
-        return labelHeight + inputHeight + topInset + bottomInset;
+        boolean labelHasContent = field.getText() != null;
 
+        if (labelHasContent)
+            return labelHeight + inputHeight + topInset + bottomInset;
+        else
+            return inputHeight + topInset + bottomInset;
     }
 
     protected void layoutChildren(double contentX, double contentY, double contentWidth, double contentHeight) {
@@ -53,14 +57,20 @@ public class FieldSkin extends SkinBase<Field> {
 
 	        field.getInputContainer().resizeRelocate(inputX, contentY, inputWidth, contentHeight);
         } else {
-            double labelPrefHeight = field.getLabelContainer().prefHeight(-1);
-            double labelHeight = Math.min(labelPrefHeight, contentHeight);
+            boolean labelHasContent = field.getText() != null;
 
-            field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), labelHeight);
+            if (labelHasContent) {
+                double labelPrefHeight = field.getLabelContainer().prefHeight(-1);
+                double labelHeight = Math.min(labelPrefHeight, contentHeight);
 
-            double restHeight = labelHeight - contentHeight;
+                field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), labelHeight);
 
-            field.getInputContainer().resizeRelocate(contentX, contentY + labelHeight, contentWidth, restHeight);
+                double restHeight = labelHeight - contentHeight;
+
+                field.getInputContainer().resizeRelocate(contentX, contentY + labelHeight, contentWidth, restHeight);
+            } else {
+                field.getInputContainer().resizeRelocate(contentX, contentY, contentWidth, contentHeight);
+            }
         }
     }
 }
