@@ -151,7 +151,10 @@ DirtyStateTracker dirtyState = new DirtyStateTracker(customer,
 // Disable save button until anything is changed
 saveButton.disableProperty().bind(dirtyState.not())
 
-// Show undo button when dirty
+// Undo changes
+undoButton.setOnAction(event -> dirtyState.reset());
+
+// Show undo button when changes are performed
 undoButton.visibleProperty().bind(dirtyState);
 ```
 

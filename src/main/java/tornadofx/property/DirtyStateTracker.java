@@ -44,9 +44,11 @@ import java.util.Map;
  *
  * <p>To reset dirty state and clear the rollback buffer, call {@code DirtyStateTracker#undo()}.</p>
  *
- * <p>To conditionally show an undo button when changes are performed:</p>
- *
  * <pre>
+ *     // Undo changes
+ *     undoButton.setOnAction(event -> dirtyState.reset());
+ *
+ *     // Show undo button when changes are performed
  *     undoButton.visibleProperty().bind(dirtyState);
  * </pre>
  *
