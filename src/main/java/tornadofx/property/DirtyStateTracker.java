@@ -4,26 +4,29 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WritableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class DirtyProperty extends ReadOnlyBooleanWrapper {
+public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
     private final ObservableList<Property> properties = FXCollections.observableArrayList();
 	private final ObservableList<Property> dirtyProperties = FXCollections.observableArrayList();
-	private final ObservableList<Property> unmodifiableDirtyProperties =
-		FXCollections.unmodifiableObservableList(dirtyProperties);
+	private final ObservableList<Property> unmodifiableDirtyProperties = FXCollections.unmodifiableObservableList(dirtyProperties);
+	private final Map<Property, Object> initialValues = new HashMap<>();
 
 	private DirtyListener dirtyListener = new DirtyListener();
 
-	public DirtyProperty(Object bean) {
+	public DirtyStateTracker(Object bean) {
 		this(bean, true);
 	}
 
-    public DirtyProperty(Object bean, boolean addDeclaredProperties) {
+    public DirtyStateTracker(Object bean, boolean addDeclaredProperties) {
 	    super(bean, "dirty", false);
 	    monitorChanges();
 
@@ -31,7 +34,7 @@ public class DirtyProperty extends ReadOnlyBooleanWrapper {
 		    addDeclaredProperties();
     }
 
-    public DirtyProperty(Object bean, List<Property> properties) {
+    public DirtyStateTracker(Object bean, List<Property> properties) {
 	    super(bean, "dirty", false);
 	    monitorChanges();
 	    getProperties().addAll(properties);
@@ -43,7 +46,7 @@ public class DirtyProperty extends ReadOnlyBooleanWrapper {
 
 		for (Method method : bean.getClass().getDeclaredMethods()) {
 			if (method.getName().endsWith("Property") && Property.class.isAssignableFrom(method.getReturnType())
-				&& !DirtyProperty.class.isAssignableFrom(method.getReturnType())) {
+				&& !DirtyStateTracker.class.isAssignableFrom(method.getReturnType())) {
 				try {
 					Property property = (Property) method.invoke(bean);
 					if (property != null)
@@ -67,8 +70,10 @@ public class DirtyProperty extends ReadOnlyBooleanWrapper {
 	private class DirtyListener implements ChangeListener {
         @SuppressWarnings("SuspiciousMethodCalls")
         public void changed(ObservableValue property, Object oldValue, Object newValue) {
-	        if (!dirtyProperties.contains(property))
+	        if (!dirtyProperties.contains(property)) {
+		        initialValues.put((Property) property, oldValue);
 		        dirtyProperties.add((Property) property);
+	        }
 
 			if (!isDirty())
 				setValue(true);
@@ -77,8 +82,14 @@ public class DirtyProperty extends ReadOnlyBooleanWrapper {
 
     public void reset() {
 	    dirtyProperties.clear();
+	    initialValues.clear();
 		setValue(false);
     }
+
+	public void undo() {
+		initialValues.forEach(WritableValue::setValue);
+		setValue(false);
+	}
 
     public Boolean isDirty() {
         return getValue();

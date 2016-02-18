@@ -1,26 +1,20 @@
 package tornadofx.control.test;
 
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.Property;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import tornadofx.control.Fieldset;
 import tornadofx.control.Form;
-
-import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
+import tornadofx.property.DirtyStateTracker;
 
 public class FormDemo extends Application {
 	public void start(Stage stage) throws Exception {
 		Customer customer = Customer.createSample();
+		DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
 
 		Form form = new Form();
 		form.setPadding(new Insets(20));
@@ -44,22 +38,13 @@ public class FormDemo extends Application {
 		contactInfo.field("Zip/City", zipInput, cityInput);
 
 		Button saveButton = new Button("Save");
-		saveButton.disableProperty().bind(customer.dirtyProperty().not());
-		saveButton.setOnAction(event -> customer.dirtyProperty().reset());
-		contactInfo.field(saveButton);
+		saveButton.disableProperty().bind(dirtyState.not());
+		saveButton.setOnAction(event -> dirtyState.reset());
 
-		// Add debug info on currently dirty bindings
-		ObservableList<Property> currentlyDirty = customer.dirtyProperty().getUnmodifiableDirtyProperties();
-		Callable<String> dirtyExpr = () -> {
-			if (currentlyDirty.isEmpty())
-				return "No dirty fields";
-
-			return "Dirty fields: " + currentlyDirty.stream().map(Property::getName).collect(Collectors.joining(", "));
-		};
-		StringBinding dirtyString = Bindings.createStringBinding(dirtyExpr, currentlyDirty);
-		Text dirtyInfo = new Text();
-		dirtyInfo.textProperty().bind(dirtyString);
-		contactInfo.getChildren().add(dirtyInfo);
+		Button undoButton = new Button("Undo");
+		undoButton.setOnAction(event -> dirtyState.undo());
+		undoButton.visibleProperty().bind(dirtyState);
+		contactInfo.field(saveButton, undoButton);
 
 		stage.setScene(new Scene(form, 400,-1));
 

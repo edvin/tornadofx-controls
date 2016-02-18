@@ -2,7 +2,6 @@ package tornadofx.control.test;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import tornadofx.property.DirtyProperty;
 
 public class Customer {
 	private SimpleIntegerProperty id = new SimpleIntegerProperty(this, "id");
@@ -56,19 +55,6 @@ public class Customer {
 
 	public void setCity(String city) {
 		this.city.set(city);
-	}
-
-	private DirtyProperty dirty;
-
-	public boolean getDirty() {
-		return dirty != null && dirty.get();
-	}
-
-	public DirtyProperty dirtyProperty() {
-		if (dirty == null)
-			dirty = new DirtyProperty(this);
-
-		return dirty;
 	}
 
 	public static Customer createSample() {
