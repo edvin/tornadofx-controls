@@ -1,32 +1,68 @@
 package tornadofx.control.test;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.Property;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 import tornadofx.control.Fieldset;
 import tornadofx.control.Form;
 
+import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
+
 public class FormDemo extends Application {
 	public void start(Stage stage) throws Exception {
+		Customer customer = Customer.createSample();
+
 		Form form = new Form();
 		form.setPadding(new Insets(20));
 
 		Fieldset contactInfo = form.fieldset("Contact Information");
 
-		contactInfo.field("Id", new TextField());
-		contactInfo.field("Username", new TextField());
+		TextField idInput = new TextField();
+		idInput.textProperty().bindBidirectional(customer.idProperty(), new NumberStringConverter());
+		contactInfo.field("Id", idInput);
+
+		TextField usernameInput = new TextField();
+		usernameInput.textProperty().bindBidirectional(customer.usernameProperty());
+		contactInfo.field("Username", usernameInput);
 
 		TextField zipInput = new TextField();
+		zipInput.textProperty().bindBidirectional(customer.zipProperty());
 		zipInput.setMinWidth(80);
 		zipInput.setMaxWidth(80);
-		contactInfo.field("Zip/City", zipInput, new TextField());
+		TextField cityInput = new TextField();
+		cityInput.textProperty().bindBidirectional(customer.cityProperty());
+		contactInfo.field("Zip/City", zipInput, cityInput);
 
-		contactInfo.field(new Button("Save"));
+		Button saveButton = new Button("Save");
+		saveButton.disableProperty().bind(customer.dirtyProperty().not());
+		saveButton.setOnAction(event -> customer.dirtyProperty().reset());
+		contactInfo.field(saveButton);
+
+		// Add debug info on currently dirty bindings
+		ObservableList<Property> currentlyDirty = customer.dirtyProperty().getUnmodifiableDirtyProperties();
+		Callable<String> dirtyExpr = () -> {
+			if (currentlyDirty.isEmpty())
+				return "No dirty fields";
+
+			return "Dirty fields: " + currentlyDirty.stream().map(Property::getName).collect(Collectors.joining(", "));
+		};
+		StringBinding dirtyString = Bindings.createStringBinding(dirtyExpr, currentlyDirty);
+		Text dirtyInfo = new Text();
+		dirtyInfo.textProperty().bind(dirtyString);
+		contactInfo.getChildren().add(dirtyInfo);
 
 		stage.setScene(new Scene(form, 400,-1));
+
 		stage.show();
 	}
 }
