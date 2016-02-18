@@ -136,6 +136,27 @@ storageInput.textProperty().bindBidirectional(product.sizeProperty(), new UnitCo
 
 Optionally configure `binary (true/false)` and `separator` (default "").
 
+## DirtyStateTracker
+
+Track dirty states for a collection of properties, with undo feature to rollback changes.
+
+```java
+// Track all properties in customer
+DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
+
+// Track only username and password
+DirtyStateTracker dirtyState = new DirtyStateTracker(customer,
+	customer.usernameProperty(), customer.passwordProperty());
+
+// Disable save button until anything is changed
+saveButton.disableProperty().bind(dirtyState.not())
+
+// Show undo button when dirty
+undoButton.visibleProperty().bind(dirtyState);
+```
+
+See the JavaDoc for more information and options. 
+
 ## LeanPropertyValueFactory
 
 Fancy having public fields for your JavaFX properties instead of public methods in your model objects?
