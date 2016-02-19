@@ -18,22 +18,22 @@ import java.util.Objects;
 /**
  * <p>Track dirty states for a collection of properties, with undo feature to rollback changes.</p>
  *
- * <p>Create an instance of DirtyStateTracker with a reference to the bean that holds the properties
+ * <p>Create an instance of DirtyState with a reference to the bean that holds the properties
  * you want to track changes in. All puplic properties are automatically tracked, unless you
  * supply an explicit list of properties to track.</p>
  *
  * <pre>
  *     // Track all properties in customer
- *     DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
+ *     DirtyState dirtyState = new DirtyState(customer);
  *
  *     // Track only username and password
- *     DirtyStateTracker dirtyState = new DirtyStateTracker(customer,
+ *     DirtyState dirtyState = new DirtyState(customer,
  *          customer.usernameProperty(), customer.passwordProperty());
  * </pre>
  *
- * <p>The list of currently dirty properties can be obtained via {@code DirtyStateTracker#getUnmodifiableDirtyProperties()}.</p>
+ * <p>The list of currently dirty properties can be obtained via {@code DirtyState#getUnmodifiableDirtyProperties()}.</p>
  *
- * <p>The {@code DirtyStateTracker} itself is a {@code ReadOnlyProperty} you can use to track if any of the properties are dirty. A good
+ * <p>The {@code DirtyState} itself is a {@code ReadOnlyProperty} you can use to track if any of the properties are dirty. A good
  * use case for this is for example conditionally enabling of a save button:</p>
  *
  * <pre>
@@ -41,9 +41,9 @@ import java.util.Objects;
  *     saveButton.disableProperty().bind(dirtyState.not())
  * </pre>
  *
- * <p>To roll back any changes, call {@code DirtyStateTracker#reset()}.</p>
+ * <p>To roll back any changes, call {@code DirtyState#reset()}.</p>
  *
- * <p>To reset dirty state and clear the rollback buffer, call {@code DirtyStateTracker#undo()}.</p>
+ * <p>To reset dirty state and clear the rollback buffer, call {@code DirtyState#undo()}.</p>
  *
  * <pre>
  *     // Undo changes
@@ -58,11 +58,11 @@ import java.util.Objects;
  *
  * <pre>
  *     // Track all but the id property
- *     DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
+ *     DirtyState dirtyState = new DirtyState(customer);
  *     dirtyState.getProperties().remove(customer.idProperty());
  * </pre>
  */
-public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
+public class DirtyState extends ReadOnlyBooleanWrapper {
     private final ObservableList<Property> properties = FXCollections.observableArrayList();
 	private final ObservableList<Property> dirtyProperties = FXCollections.observableArrayList();
 	private final ObservableList<Property> unmodifiableDirtyProperties = FXCollections.unmodifiableObservableList(dirtyProperties);
@@ -70,11 +70,11 @@ public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
 
 	private DirtyListener dirtyListener = new DirtyListener();
 
-	public DirtyStateTracker(Object bean) {
+	public DirtyState(Object bean) {
 		this(bean, true);
 	}
 
-    public DirtyStateTracker(Object bean, boolean addDeclaredProperties) {
+    public DirtyState(Object bean, boolean addDeclaredProperties) {
 	    super(bean, "dirty", false);
 	    monitorChanges();
 
@@ -82,7 +82,7 @@ public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
 		    addDeclaredProperties();
     }
 
-    public DirtyStateTracker(Object bean, List<Property> properties) {
+    public DirtyState(Object bean, List<Property> properties) {
 	    super(bean, "dirty", false);
 	    monitorChanges();
 	    getProperties().addAll(properties);
@@ -94,7 +94,7 @@ public class DirtyStateTracker extends ReadOnlyBooleanWrapper {
 
 		for (Method method : bean.getClass().getDeclaredMethods()) {
 			if (method.getName().endsWith("Property") && Property.class.isAssignableFrom(method.getReturnType())
-				&& !DirtyStateTracker.class.isAssignableFrom(method.getReturnType())) {
+				&& !DirtyState.class.isAssignableFrom(method.getReturnType())) {
 				try {
 					Property property = (Property) method.invoke(bean);
 					if (property != null)

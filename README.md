@@ -136,13 +136,13 @@ storageInput.textProperty().bindBidirectional(product.sizeProperty(), new UnitCo
 
 Optionally configure `binary (true/false)` and `separator` (default "").
 
-## DirtyStateTracker
+## DirtyState Tracker
 
 Track dirty states for a collection of properties, with undo feature to rollback changes.
 
 ```java
 // Track all properties in customer
-DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
+DirtyState dirtyState = new DirtyState(customer);
 
 // Track only username and password
 DirtyStateTracker dirtyState = new DirtyStateTracker(customer,
@@ -152,7 +152,7 @@ DirtyStateTracker dirtyState = new DirtyStateTracker(customer,
 saveButton.disableProperty().bind(dirtyState.not())
 
 // Undo changes
-undoButton.setOnAction(event -> dirtyState.reset());
+undoButton.setOnAction(event -> dirtyState.undo());
 
 // Show undo button when changes are performed
 undoButton.visibleProperty().bind(dirtyState);

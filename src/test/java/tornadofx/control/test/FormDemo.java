@@ -9,12 +9,12 @@ import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import tornadofx.control.Fieldset;
 import tornadofx.control.Form;
-import tornadofx.property.DirtyStateTracker;
+import tornadofx.property.DirtyState;
 
 public class FormDemo extends Application {
 	public void start(Stage stage) throws Exception {
 		Customer customer = Customer.createSample();
-		DirtyStateTracker dirtyState = new DirtyStateTracker(customer);
+		DirtyState dirtyState = new DirtyState(customer);
 
 		Form form = new Form();
 		form.setPadding(new Insets(20));
