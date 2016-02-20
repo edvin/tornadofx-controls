@@ -8,6 +8,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Skin;
 import javafx.scene.layout.HBox;
+import tornadofx.control.skin.FieldSkin;
 
 @DefaultProperty("inputs")
 public class Field extends Control {
@@ -17,7 +18,7 @@ public class Field extends Control {
     private InputContainer inputContainer = new InputContainer();
     private ObservableList<Node> inputs;
 
-	LabelContainer getLabelContainer() {
+	public LabelContainer getLabelContainer() {
 		return labelContainer;
 	}
 

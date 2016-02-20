@@ -1,6 +1,8 @@
-package tornadofx.control;
+package tornadofx.control.skin;
 
 import javafx.scene.control.SkinBase;
+import tornadofx.control.Field;
+import tornadofx.control.Fieldset;
 
 import static javafx.geometry.Orientation.HORIZONTAL;
 

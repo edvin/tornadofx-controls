@@ -1,4 +1,4 @@
-# Tornado FX Controls
+# Tornado FXControls
 
 CSS Stylable Controls for JavaFX
 
