@@ -2,15 +2,11 @@
 
 CSS Stylable Controls for JavaFX
 
-### Add Tornado FX Controls to your project
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.tornado/tornadofx-controls/badge.svg)](https://search.maven.org/#search|ga|1|no.tornado.tornadofx-controls)
 
-```xml
-<dependency>
-	<groupId>no.tornado</groupId>
-	<artifactId>tornadofx-controls</artifactId>
-	<version>1.0.2</version>
-</dependency>
-```
+## DateTimePicker
+
+An extension to the JavaFX DatePicker control that lets you input the the time and date in with a configurable format.
 
 ## ListMenu
 
@@ -189,4 +185,22 @@ public class Customer {
 	</columns>
 </TableView>
 
+```
+
+
+## Installation
+
+### Maven
+```xml
+<dependency>
+	<groupId>no.tornado</groupId>
+	<artifactId>tornadofx-controls</artifactId>
+	<version>1.0.3</version>
+</dependency>
+```
+
+### Gradle
+
+```groovy
+compile 'no.tornado:tornadofx-controls:1.0.3'
 ```

@@ -1,9 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.0.3] - 2016-02-25
 
 ### Added
+- DateTimePicker control
 - Orientation for Form layout
 - Responsive orientation for Form layout
 
