@@ -2,23 +2,23 @@ package tornadofx.control.skin;
 
 import javafx.geometry.Side;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import tornadofx.control.ListItem;
 import tornadofx.control.ListMenu;
 
 import java.util.function.Function;
 
 public class ListItemSkin extends SkinBase<ListItem> {
-	private final Label textLabel;
+	private final Text text;
 
 	public ListItemSkin(ListItem control) {
 		super(control);
-		textLabel = new Label();
-		textLabel.textProperty().bind(control.getTextProperty());
+		text = new Text();
+		text.textProperty().bind(control.getTextProperty());
 
-		getChildren().add(textLabel);
+		getChildren().add(text);
 
 		if (getSkinnable().getGraphic() != null)
 			getChildren().add(getSkinnable().getGraphic());
@@ -31,14 +31,14 @@ public class ListItemSkin extends SkinBase<ListItem> {
 	}
 
 	private double acc(Function<Node, Double> fn) {
-		double val = fn.apply(textLabel);
+		double val = fn.apply(text);
 		if (getSkinnable().getGraphic() != null)
 			val += fn.apply(getSkinnable().getGraphic());
 		return val;
 	}
 
 	private double biggest(Function<Node, Double> fn) {
-		double val = fn.apply(textLabel);
+		double val = fn.apply(text);
 
 		if (getSkinnable().getGraphic() != null) {
 			double gval = fn.apply(getSkinnable().getGraphic());
@@ -63,7 +63,7 @@ public class ListItemSkin extends SkinBase<ListItem> {
 	}
 
 	protected double computePrefWidth(double height, double topInset, double rightInset, double bottomInset, double leftInset) {
-		double w = textLabel.prefWidth(height);
+		double w = text.prefWidth(height);
 
 		if (getSkinnable().getGraphic() != null && iconPosition().isVertical())
 			w += Math.max(getSkinnable().getGraphic().prefWidth(-1), graphicFixedSize());
@@ -72,7 +72,7 @@ public class ListItemSkin extends SkinBase<ListItem> {
 	}
 
 	protected double computePrefHeight(double width, double topInset, double rightInset, double bottomInset, double leftInset) {
-		double h = textLabel.prefHeight(width);
+		double h = text.prefHeight(width);
 
 		if (getSkinnable().getGraphic() != null && iconPosition().isHorizontal())
 			h += Math.max(getSkinnable().getGraphic().prefHeight(-1), graphicFixedSize());
@@ -104,16 +104,16 @@ public class ListItemSkin extends SkinBase<ListItem> {
 					y += Math.max(graphic.getLayoutBounds().getHeight(), graphicFixedSize());
 				}
 
-				double centeredX = x + (w / 2) - textLabel.prefWidth(-1) / 2;
-				textLabel.resizeRelocate(centeredX, y, textLabel.prefWidth(-1), textLabel.prefHeight(-1));
+				double centeredX = x + (w / 2) - text.prefWidth(-1) / 2;
+				text.resizeRelocate(centeredX, y, text.prefWidth(-1), text.prefHeight(-1));
 				break;
 			}
 			case BOTTOM: {
-				double centeredX = x + (w / 2) - textLabel.prefWidth(-1) / 2;
-				textLabel.resizeRelocate(centeredX, y, textLabel.prefWidth(-1), textLabel.prefHeight(-1));
+				double centeredX = x + (w / 2) - text.prefWidth(-1) / 2;
+				text.resizeRelocate(centeredX, y, text.prefWidth(-1), text.prefHeight(-1));
 
 				if (graphic != null) {
-					y += textLabel.prefHeight(-1);
+					y += text.prefHeight(-1);
 					double fixedSize = graphicFixedSize();
 					if (fixedSize > graphic.getLayoutBounds().getHeight())
 						y += fixedSize - graphic.getLayoutBounds().getHeight();
@@ -133,8 +133,8 @@ public class ListItemSkin extends SkinBase<ListItem> {
 					x += Math.max(graphic.getLayoutBounds().getWidth(), graphicFixedSize());
 				}
 
-				double centeredY = y + (h / 2) - textLabel.prefHeight(-1) / 2;
-				textLabel.resizeRelocate(x, centeredY, textLabel.prefWidth(-1), textLabel.prefHeight(-1));
+				double centeredY = y + (h / 2) - text.prefHeight(-1) / 2;
+				text.resizeRelocate(x, centeredY, text.prefWidth(-1), text.prefHeight(-1));
 
 				break;
 			}
@@ -146,8 +146,8 @@ public class ListItemSkin extends SkinBase<ListItem> {
 					graphic.resizeRelocate(w, centeredY, graphicWidth, graphic.prefHeight(-1));
 				}
 
-				double centeredY = y + (h / 2) - textLabel.prefHeight(-1) / 2;
-				textLabel.resizeRelocate(x, centeredY, textLabel.prefWidth(-1), textLabel.prefHeight(-1));
+				double centeredY = y + (h / 2) - text.prefHeight(-1) / 2;
+				text.resizeRelocate(x, centeredY, text.prefWidth(-1), text.prefHeight(-1));
 				break;
 			}
 		}
