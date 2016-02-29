@@ -104,6 +104,19 @@ contactInfo.field("Zip/City", zipInput, new TextField());
 contactInfo.field(new Button("Save"));
 ```
 
+### Responsive layout
+
+A fieldset can lay out it's labels on the same line as the inputs (`orientation=HORIZONTAL`)
+or the labels can be laid out above the inputs (`orientation=VERTICAL`).
+
+By changing the `wrapWidth` property on a fieldset you can make a fieldset switch from `HORIZONTAL`
+ to `VERTICAL` automatically when the form is resized to a smaller width than `wrapWidth`.
+ 
+### Legends
+
+A fieldset can have an optional icon specified for it's legend by setting the `icon` property
+to any node.
+
 ### CSS
 
 Use the default [CSS Stylesheet](https://github.com/edvin/tornadofx-controls/blob/master/src/main/resources/tornadofx/control/form.css)
