@@ -4,6 +4,10 @@ CSS Stylable Controls for JavaFX
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.tornado/tornadofx-controls/badge.svg)](https://search.maven.org/#search|ga|1|no.tornado.tornadofx-controls)
 
+## DatePickerTableCell
+
+TableCell that supports editing of `LocalDate` properties with a DatePicker.
+ 
 ## DateTimePicker
 
 An extension to the JavaFX DatePicker control that lets you input the the time and date in with a configurable format.
