@@ -212,12 +212,12 @@ public class Customer {
 <dependency>
 	<groupId>no.tornado</groupId>
 	<artifactId>tornadofx-controls</artifactId>
-	<version>1.0.3</version>
+	<version>1.0.4</version>
 </dependency>
 ```
 
 ### Gradle
 
 ```groovy
-compile 'no.tornado:tornadofx-controls:1.0.3'
+compile 'no.tornado:tornadofx-controls:1.0.4'
 ```
