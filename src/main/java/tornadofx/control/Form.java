@@ -25,7 +25,7 @@ public class Form extends VBox {
     }
 
 	public String getUserAgentStylesheet() {
-		return ListMenu.class.getResource("form.css").toExternalForm();
+		return Form.class.getResource("form.css").toExternalForm();
 	}
 
 	public Fieldset fieldset(String text) {
