@@ -1,5 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
+## [Unrleased]
+
+### Changed
+
+- DateTimePicker interprets empty string as null value
 
 ## [1.0.4] - 2016-04-05
 
