@@ -1,16 +1,14 @@
 package tornadofx.control;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.DatePicker;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.util.StringConverter;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.DatePicker;
+import javafx.util.StringConverter;
 
 /**
  * A DateTimePicker with configurable datetime format where both date and time can be changed
@@ -62,7 +60,7 @@ public class DateTimePicker extends DatePicker {
 	}
 
 	private void simulateEnterPressed() {
-		getEditor().fireEvent(new KeyEvent(getEditor(), getEditor(), KeyEvent.KEY_PRESSED, null, null, KeyCode.ENTER, false, false, false, false));
+		getEditor().commitValue();
 	}
 
 	public LocalDateTime getDateTimeValue() {
