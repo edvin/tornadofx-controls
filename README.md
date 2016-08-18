@@ -6,11 +6,12 @@ CSS Stylable Controls for JavaFX
 
 ## DatePickerTableCell
 
-TableCell that supports editing of `LocalDateTime` properties with a DatePicker.
+TableCell that supports editing of `LocalDate` properties with a DatePicker.
  
 ## DateTimePicker
 
-An extension to the JavaFX DatePicker control that lets you input the the time and date in with a configurable format.
+An extension to the JavaFX DatePicker control that lets you input the the time and date in with a configurable format
+and operate on a `LocalDateTime` value.
 
 ## ListMenu
 
