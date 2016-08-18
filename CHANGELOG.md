@@ -2,8 +2,8 @@
 
 ## [1.0.5]
 
-- - Changed NaviSelect to render as dropdown with button, the previous look confused people into thinking it was editable as a text field
-- - Use correct submit event for DateTimePicker
+- Changed NaviSelect to render as dropdown with button, the previous look confused people into thinking it was editable as a text field
+- Use correct submit event for DateTimePicker
 
 ### Changed
 
