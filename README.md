@@ -26,6 +26,32 @@ A menu that behaves and looks like a typical `ul`/`li` based *HTML5* menu.
  - [ListMenuDemo](       https://github.com/edvin/tornadofx-controls/blob/master/src/test/java/tornadofx/control/test/ListMenuDemo.java) source code
  - [Custom CSS Example] (https://github.com/edvin/tornadofx-controls/blob/master/src/test/resources/custom.css)
 
+### NaviSelect
+
+A chooser with a navigate-to button that lets you select an entry and also edit it. The select mechanism must be implemented manually,
+for example by opening a dialog with a search field and a list view.
+
+![](http://i.imgur.com/IvfGVuw.png)
+
+Typical use case can be selecting a customer, but the complete customer list cannot be loaded into the dropdown, so you need to
+open a dialog to choose. The navigate-to button would take you to a customer edit screen.
+
+```java
+Customer customer = customerService.getCustomer(42);
+NaviSelect<Customer> navi = new NaviSelect<>();
+navi.setValue(customer);
+navi.setOnEdit(event -> {
+    // Show dialog to search for customers, when done, set the new value into the navi
+    navi.setValue(newlySelectedCustomer);
+});
+```
+
+To override how the customer is rendered in the dropdown you can configure the visual converter:
+
+```java
+navi.setVisualConverter(Customer::getName);
+```
+
 ### Create programatically
 
 ```java

@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,12 +25,13 @@ public class NaviSelectDemo extends Application {
 		root.setAlignment(Pos.CENTER_LEFT);
 		root.setPadding(new Insets(50));
 
-		Label label = new Label("Choose person:");
+		Label label = new Label("Choose customer:");
 		label.setStyle("-fx-font-weight: bold");
 
 		NaviSelect<Email> navi = new NaviSelect<>();
 		navi.setValue(new Email("john@doe.com", "John Doe"));
 
+		navi.setVisualConverter(Email::getName);
 		navi.setOnEdit(event -> selectEmail(navi));
 
 		navi.setOnGoto(event -> {
@@ -39,7 +41,7 @@ public class NaviSelectDemo extends Application {
 			alert.show();
 		});
 
-		root.getChildren().addAll(label, navi);
+		root.getChildren().addAll(label, navi, new TextField());
 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

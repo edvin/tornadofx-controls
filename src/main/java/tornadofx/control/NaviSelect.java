@@ -6,8 +6,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -17,8 +18,7 @@ import java.util.function.Function;
 import static javafx.beans.binding.Bindings.createStringBinding;
 
 public class NaviSelect<T> extends HBox {
-	private Button editButton = new Button();
-	private TextField visual = new TextField();
+	private ComboBox<String> editButton = new ComboBox<>();
 	private Button gotoButton = new Button();
     private Function<T, String> defaultVisualConverter = t -> { String value = t == null ? null : t.toString(); return value == null ? "" : value; };
     private ObjectProperty<Function<T, String>> visualConverter = new SimpleObjectProperty<Function<T, String>>(defaultVisualConverter) {
@@ -30,17 +30,13 @@ public class NaviSelect<T> extends HBox {
     private ObjectProperty<T> value = new SimpleObjectProperty<>();
     private StringBinding visualBinding = createStringBinding(() -> getVisualConverter().apply(getValue()), valueProperty());
 
-
     public NaviSelect() {
 		getStyleClass().add("navi-select");
-		visual.getStyleClass().add("visual");
+		editButton.getStyleClass().add("edit-button");
 
-        visual.textProperty().bind(visualBinding);
-        HBox.setHgrow(visual, Priority.ALWAYS);
+        editButton.valueProperty().bind(visualBinding);
+        HBox.setHgrow(editButton, Priority.ALWAYS);
 
-		Pane editButtonGraphic = new Pane();
-		editButtonGraphic.getStyleClass().add("icon");
-		editButton.setGraphic(editButtonGraphic);
 		editButton.setTooltip(new Tooltip("Edit"));
 
 		Pane gotoButtonGraphic = new Pane();
@@ -48,14 +44,13 @@ public class NaviSelect<T> extends HBox {
 		gotoButton.setGraphic(gotoButtonGraphic);
 		gotoButton.setTooltip(new Tooltip("Goto"));
 
-		editButton.getStyleClass().add("edit-button");
 		gotoButton.getStyleClass().add("goto-button");
 
-		getChildren().addAll(visual, editButton, gotoButton);
+		getChildren().addAll(editButton, gotoButton);
 	}
 
-	public void setOnEdit(EventHandler<ActionEvent> editHandler) {
-		editButton.setOnAction(editHandler);
+	public void setOnEdit(EventHandler<MouseEvent> editHandler) {
+		editButton.setOnMouseClicked(editHandler);
 	}
 
 	public void setOnGoto(EventHandler<ActionEvent> gotoHandler) {
@@ -66,20 +61,11 @@ public class NaviSelect<T> extends HBox {
 	public T getValue() { return value.get(); }
 	public void setValue(T value) { this.value.set(value); }
 
-	public TextField getVisual() {
-		return visual;
-	}
-
-	public void setVisual(TextField visual) {
-		this.visual = visual;
-	}
-
-
-	public Button getEditButton() {
+	public ComboBox<String> getEditButton() {
 		return editButton;
 	}
 
-	public void setEditButton(Button editButton) {
+	public void setEditButton(ComboBox<String> editButton) {
 		this.editButton = editButton;
 	}
 
