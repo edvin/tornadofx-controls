@@ -31,13 +31,13 @@ public class TableRowExpander<S> {
     }
 
     public static class TableRowDataFeatures<S> {
-        private S value;
-        private ExpanderTableColumn<S> tableColumn;
         private TableRow<S> tableRow;
+        private ExpanderTableColumn<S> tableColumn;
+        private S value;
 
-        public TableRowDataFeatures(ExpanderTableColumn<S> tableColumn, TableRow<S> tableRow, S value) {
-            this.tableColumn = tableColumn;
+        public TableRowDataFeatures(TableRow<S> tableRow, ExpanderTableColumn<S> tableColumn, S value) {
             this.tableRow = tableRow;
+            this.tableColumn = tableColumn;
             this.value = value;
         }
 
