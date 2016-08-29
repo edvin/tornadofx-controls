@@ -6,10 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import tornadofx.control.DatePickerTableCell;
-import tornadofx.control.Fieldset;
-import tornadofx.control.Form;
-import tornadofx.control.TableRowExpander;
+import tornadofx.control.*;
 
 import java.time.LocalDate;
 
@@ -50,26 +47,31 @@ public class TableRowExpanderDemo extends Application {
             fieldset.field(save);
             return form;
         });
-/*
-        expander.getExpanderColumn().setCellFactory(param -> new TableCell<Customer, Boolean>() {
-            private Button button = new Button();
 
-            {
-                button.setOnAction(event -> expander.getExpanderColumn().toggleExpanded(getIndex()));
-            }
+        ExpanderTableColumn<Customer> expanderColumn = expander.getExpanderColumn();
+        expanderColumn.setPrefWidth(75);
+        expanderColumn.setCellFactory(param -> new MyCustomToggleCell<>(expanderColumn));
 
-            protected void updateItem(Boolean expanded, boolean empty) {
-                super.updateItem(expanded, empty);
-                if (expanded == null || empty) {
-                    setGraphic(null);
-                } else {
-                    button.setText(expanded ? "Collapse" : "Expand");
-                    setGraphic(button);
-                }
-            }
-        });
-*/
         stage.setScene(new Scene(tableView));
         stage.show();
+    }
+
+    class MyCustomToggleCell<S> extends TableCell<S, Boolean> {
+        private Button button = new Button();
+
+        public MyCustomToggleCell(ExpanderTableColumn<S> column) {
+            button.setOnAction(event -> column.toggleExpanded(getIndex()));
+        }
+
+        protected void updateItem(Boolean expanded, boolean empty) {
+            super.updateItem(expanded, empty);
+            if (expanded == null || empty) {
+                setGraphic(null);
+            } else {
+                button.setText(expanded ? "Collapse" : "Expand");
+                setGraphic(button);
+            }
+        }
+
     }
 }
