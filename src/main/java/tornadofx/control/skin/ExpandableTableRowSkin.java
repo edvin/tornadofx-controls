@@ -23,7 +23,7 @@ public class ExpandableTableRowSkin<S> extends TableRowSkin<S> {
 
     private Node getContent() {
         if (content == null) {
-            TableRowDataFeatures<S> features = new TableRowDataFeatures<>(expanderColumn, tableRow, getSkinnable().getItem());
+            TableRowDataFeatures<S> features = new TableRowDataFeatures<>(tableRow, expanderColumn, getSkinnable().getItem());
             content = expandedNodeBuilder.call(features);
             getChildren().add(content);
         }

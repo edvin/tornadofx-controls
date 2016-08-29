@@ -32,16 +32,28 @@ public class TableRowExpanderDemo extends Application {
 
         TableRowExpander.install(tableView, param -> {
             Customer customer = param.getValue();
+            System.out.println("Creating form for customer " + customer.getUsername() + ", cell " + param.getTableRow());
             Form form = new Form();
             form.setPadding(new Insets(20));
             Fieldset fieldset = form.fieldset("Edit customer");
-            fieldset.field("Username", new TextField(customer.getUsername()));
-            fieldset.field("Registered", new DatePicker(customer.getRegistered()));
-            fieldset.field(new Button("Save"));
+
+            TextField usernameField = new TextField();
+            usernameField.textProperty().bindBidirectional(customer.usernameProperty());
+            fieldset.field("Username", usernameField);
+
+            DatePicker registeredField = new DatePicker();
+            registeredField.valueProperty().bindBidirectional(customer.registeredProperty());
+            fieldset.field("Registered", registeredField);
+
+            Button save = new Button("Save");
+            save.setOnAction(event -> {
+                param.toggleExpanded();
+            });
+            fieldset.field(save);
             return form;
         });
 
-        stage.setScene(new Scene(tableView, 800, 600));
+        stage.setScene(new Scene(tableView));
         stage.show();
     }
 }

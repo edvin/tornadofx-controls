@@ -49,7 +49,6 @@ public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
     public void toggleExpanded(int index) {
         SimpleBooleanProperty expanded = (SimpleBooleanProperty) getCellObservableValue(index);
         expanded.setValue(!expanded.getValue());
-        getTableView().refresh();
     }
 
     public BiFunction<TableCell<S, Boolean>, Boolean, Node> getToggleNodeProvider() {
