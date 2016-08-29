@@ -41,20 +41,20 @@ public class TableRowExpander<S> {
             this.value = value;
         }
 
-        public S getValue() {
-            return value;
+        public TableRow<S> getTableRow() {
+            return tableRow;
         }
 
         public ExpanderTableColumn<S> getTableColumn() {
             return tableColumn;
         }
 
-        public TableRow<S> getTableRow() {
-            return tableRow;
-        }
-
         public SimpleBooleanProperty expandedProperty() {
             return (SimpleBooleanProperty) tableColumn.getCellObservableValue(tableRow.getIndex());
+        }
+
+        public S getValue() {
+            return value;
         }
 
         public void toggleExpanded() {

@@ -30,7 +30,7 @@ public class TableRowExpanderDemo extends Application {
 
         tableView.getColumns().addAll(username, registered);
 
-        TableRowExpander.install(tableView, param -> {
+        TableRowExpander<Customer> expander = TableRowExpander.install(tableView, param -> {
             Customer customer = param.getValue();
             System.out.println("Creating form for customer " + customer.getUsername() + ", cell " + param.getTableRow());
             Form form = new Form();
@@ -46,13 +46,29 @@ public class TableRowExpanderDemo extends Application {
             fieldset.field("Registered", registeredField);
 
             Button save = new Button("Save");
-            save.setOnAction(event -> {
-                param.toggleExpanded();
-            });
+            save.setOnAction(event -> param.toggleExpanded());
             fieldset.field(save);
             return form;
         });
+/*
+        expander.getExpanderColumn().setCellFactory(param -> new TableCell<Customer, Boolean>() {
+            private Button button = new Button();
 
+            {
+                button.setOnAction(event -> expander.getExpanderColumn().toggleExpanded(getIndex()));
+            }
+
+            protected void updateItem(Boolean expanded, boolean empty) {
+                super.updateItem(expanded, empty);
+                if (expanded == null || empty) {
+                    setGraphic(null);
+                } else {
+                    button.setText(expanded ? "Collapse" : "Expand");
+                    setGraphic(button);
+                }
+            }
+        });
+*/
         stage.setScene(new Scene(tableView));
         stage.show();
     }
