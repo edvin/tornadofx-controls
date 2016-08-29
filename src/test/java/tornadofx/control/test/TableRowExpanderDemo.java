@@ -2,10 +2,9 @@ package tornadofx.control.test;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import tornadofx.control.DatePickerTableCell;
 import tornadofx.control.Fieldset;
@@ -31,12 +30,17 @@ public class TableRowExpanderDemo extends Application {
 
         tableView.getColumns().addAll(username, registered);
 
-        new TableRowExpander<>(tableView, (parent, customer) -> {
+        TableRowExpander.install(tableView, param -> {
+            Customer customer = param.getValue();
             Form form = new Form();
+            form.setPadding(new Insets(20));
             Fieldset fieldset = form.fieldset("Edit customer");
             fieldset.field("Username", new TextField(customer.getUsername()));
+            fieldset.field("Registered", new DatePicker(customer.getRegistered()));
+            fieldset.field(new Button("Save"));
             return form;
         });
+
         stage.setScene(new Scene(tableView, 800, 600));
         stage.show();
     }

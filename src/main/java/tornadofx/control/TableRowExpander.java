@@ -1,19 +1,21 @@
 package tornadofx.control;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.util.Callback;
 import tornadofx.control.skin.ExpandableTableRowSkin;
-
-import java.util.function.BiFunction;
 
 public class TableRowExpander<S> {
     private final ExpanderTableColumn<S> expanderColumn;
-    private TableView<S> tableView;
 
-    public TableRowExpander(TableView<S> tableView, BiFunction<RowExpanderPane, S, Node> expandedNodeBuilder) {
-        this.tableView = tableView;
+    public ExpanderTableColumn<S> getExpanderColumn() {
+        return this.expanderColumn;
+    }
+
+    public TableRowExpander(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
         expanderColumn = new ExpanderTableColumn<>();
         tableView.getColumns().add(0, expanderColumn);
         tableView.setRowFactory(param -> new TableRow<S>() {
@@ -24,7 +26,48 @@ public class TableRowExpander<S> {
         });
     }
 
-    public ExpanderTableColumn<S> getExpanderColumn() {
-        return this.expanderColumn;
+    public static <S> TableRowExpander<S> install(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
+        return new TableRowExpander<>(tableView, expandedNodeBuilder);
+    }
+
+    public static class TableRowDataFeatures<S> {
+        private S value;
+        private ExpanderTableColumn<S> tableColumn;
+        private TableRow<S> tableRow;
+
+        public TableRowDataFeatures(ExpanderTableColumn<S> tableColumn, TableRow<S> tableRow, S value) {
+            this.tableColumn = tableColumn;
+            this.tableRow = tableRow;
+            this.value = value;
+        }
+
+        public S getValue() {
+            return value;
+        }
+
+        public ExpanderTableColumn<S> getTableColumn() {
+            return tableColumn;
+        }
+
+        public TableRow<S> getTableRow() {
+            return tableRow;
+        }
+
+        public SimpleBooleanProperty expandedProperty() {
+            return (SimpleBooleanProperty) tableColumn.getCellObservableValue(tableRow.getIndex());
+        }
+
+        public void toggleExpanded() {
+            tableColumn.toggleExpanded(tableRow.getIndex());
+        }
+
+        public Boolean isExpanded() {
+            return expandedProperty().getValue();
+        }
+
+        public void setExpanded(Boolean expanded) {
+            expandedProperty().setValue(expanded);
+        }
+
     }
 }
