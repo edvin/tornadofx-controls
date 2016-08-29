@@ -27,7 +27,7 @@ public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
         setCellFactory(param -> new ToggleCell());
     }
 
-    class ToggleCell extends TableCell<S, Boolean> {
+    private class ToggleCell extends TableCell<S, Boolean> {
         private Button button = new Button();
 
         public ToggleCell() {

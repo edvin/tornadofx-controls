@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class TableRowExpanderDemo extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList(Customer.createSample()));
+        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList(Customer.createSample(), Customer.createSample()));
         tableView.setEditable(true);
 
         TableColumn<Customer, String> username = new TableColumn<>("Username");
@@ -27,9 +27,8 @@ public class TableRowExpanderDemo extends Application {
 
         tableView.getColumns().addAll(username, registered);
 
-        TableRowExpander<Customer> expander = TableRowExpander.install(tableView, param -> {
+        TableRowExpander.install(tableView, param -> {
             Customer customer = param.getValue();
-            System.out.println("Creating form for customer " + customer.getUsername() + ", cell " + param.getTableRow());
             Form form = new Form();
             form.setPadding(new Insets(20));
             Fieldset fieldset = form.fieldset("Edit customer");
@@ -48,9 +47,12 @@ public class TableRowExpanderDemo extends Application {
             return form;
         });
 
+        /*
+        // Uncomment to use a custom toggle cell implementation
         ExpanderTableColumn<Customer> expanderColumn = expander.getExpanderColumn();
         expanderColumn.setPrefWidth(75);
         expanderColumn.setCellFactory(param -> new MyCustomToggleCell<>(expanderColumn));
+        */
 
         stage.setScene(new Scene(tableView));
         stage.show();
