@@ -60,22 +60,21 @@ public class TableRowExpanderDemo extends Application {
         stage.show();
     }
 
-    class MyCustomToggleCell<S> extends TableCell<S, Boolean> {
-        private Button button = new Button();
+public class MyCustomToggleCell<S> extends TableCell<S, Boolean> {
+    private Button button = new Button();
 
-        public MyCustomToggleCell(ExpanderTableColumn<S> column) {
-            button.setOnAction(event -> column.toggleExpanded(getIndex()));
-        }
-
-        protected void updateItem(Boolean expanded, boolean empty) {
-            super.updateItem(expanded, empty);
-            if (expanded == null || empty) {
-                setGraphic(null);
-            } else {
-                button.setText(expanded ? "Collapse" : "Expand");
-                setGraphic(button);
-            }
-        }
-
+    public MyCustomToggleCell(ExpanderTableColumn<S> column) {
+        button.setOnAction(event -> column.toggleExpanded(getIndex()));
     }
+
+    protected void updateItem(Boolean expanded, boolean empty) {
+        super.updateItem(expanded, empty);
+        if (expanded == null || empty) {
+            setGraphic(null);
+        } else {
+            button.setText(expanded ? "Collapse" : "Expand");
+            setGraphic(button);
+        }
+    }
+}
 }

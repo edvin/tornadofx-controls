@@ -13,7 +13,28 @@ import javafx.util.Callback;
  * {@link TableRowExpander#install(TableView, Callback)} to configure a row expander for the given
  * TableView. The expander column contains the default button used to toggle expansion state for the row.
  *
- * You can provide a custom cellFactory to customize the toggle button.
+ * You can provide a custom cellFactory to customize the toggle button. A typical custom toggle cell implementation
+ * would look like this:
+ *
+ * <pre>
+ * public class MyCustomToggleCell&lt;S> extends TableCell&lt;S, Boolean> {
+ *     private Button button = new Button();
+ *
+ *     public MyCustomToggleCell(ExpanderTableColumn&lt;S> column) {
+ *         button.setOnAction(event -> column.toggleExpanded(getIndex()));
+ *     }
+ *
+ *     protected void updateItem(Boolean expanded, boolean empty) {
+ *         super.updateItem(expanded, empty);
+ *         if (expanded == null || empty) {
+ *             setGraphic(null);
+ *         } else {
+ *             button.setText(expanded ? "Collapse" : "Expand");
+ *             setGraphic(button);
+ *         }
+ *     }
+ * }
+ * </pre>
  *
  * @param <S> The item type of the TableView
  */
