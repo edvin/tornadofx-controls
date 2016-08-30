@@ -6,28 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
     private static final String STYLE_CLASS = "expander-column";
     private static final String EXPANDER_BUTTON_STYLE_CLASS = "expander-button";
 
-    private final Map<S, SimpleBooleanProperty> expansionState = new HashMap<>();
-
-    public ExpanderTableColumn() {
+    public ExpanderTableColumn(TableRowExpander<S> expander) {
         getStyleClass().add(STYLE_CLASS);
-
-        // The value of this column is the expanded state of the current row
-        setCellValueFactory(param -> {
-            SimpleBooleanProperty value = expansionState.get(param.getValue());
-            if (value == null) {
-                value = new SimpleBooleanProperty(false);
-                expansionState.put(param.getValue(), value);
-            }
-            return value;
-        });
-
+        setCellValueFactory(param -> expander.getExpandedProperty(param.getValue()));
         setCellFactory(param -> new ToggleCell());
     }
 
@@ -57,7 +42,6 @@ public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
     public void toggleExpanded(int index) {
         SimpleBooleanProperty expanded = (SimpleBooleanProperty) getCellObservableValue(index);
         expanded.setValue(!expanded.getValue());
-        getTableView().refresh();
     }
 
 }

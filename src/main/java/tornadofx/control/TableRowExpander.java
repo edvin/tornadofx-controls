@@ -14,6 +14,7 @@ import java.util.Map;
 public class TableRowExpander<S> {
     private final ExpanderTableColumn<S> expanderColumn;
     private final Map<S, Node> expandedNodeCache = new HashMap<>();
+    private final Map<S, SimpleBooleanProperty> expansionState = new HashMap<>();
     private TableView<S> tableView;
     private Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder;
 
@@ -21,10 +22,32 @@ public class TableRowExpander<S> {
         return this.expanderColumn;
     }
 
+    /**
+     * Returns a Boolean property that can be used to manipulate the expanded state for a row
+     * corresponding to the given item value.
+     *
+     * @param item The item corresponding to a table row
+     * @return The boolean property
+     */
+    public SimpleBooleanProperty getExpandedProperty(S item) {
+        SimpleBooleanProperty value = expansionState.get(item);
+        if (value == null) {
+            value = new SimpleBooleanProperty(item, "expanded", false) {
+                @Override
+                protected void invalidated() {
+                    tableView.refresh();
+                    if (!getValue()) expandedNodeCache.remove(getBean());
+                }
+            };
+            expansionState.put(item, value);
+        }
+        return value;
+    }
+
     public TableRowExpander(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
         this.tableView = tableView;
         this.expandedNodeBuilder = expandedNodeBuilder;
-        expanderColumn = new ExpanderTableColumn<>();
+        expanderColumn = new ExpanderTableColumn<>(this);
         tableView.getColumns().add(0, expanderColumn);
         tableView.setRowFactory(param -> new TableRow<S>() {
             @Override
@@ -59,11 +82,13 @@ public class TableRowExpander<S> {
     public static class TableRowDataFeatures<S> {
         private TableRow<S> tableRow;
         private ExpanderTableColumn<S> tableColumn;
+        private SimpleBooleanProperty expandedProperty;
         private S value;
 
         public TableRowDataFeatures(TableRow<S> tableRow, ExpanderTableColumn<S> tableColumn, S value) {
             this.tableRow = tableRow;
             this.tableColumn = tableColumn;
+            this.expandedProperty = (SimpleBooleanProperty) tableColumn.getCellObservableValue(tableRow.getIndex());
             this.value = value;
         }
 
@@ -76,15 +101,12 @@ public class TableRowExpander<S> {
         }
 
         public SimpleBooleanProperty expandedProperty() {
-            return (SimpleBooleanProperty) tableColumn.getCellObservableValue(tableRow.getIndex());
-        }
-
-        public S getValue() {
-            return value;
+            return expandedProperty;
         }
 
         public void toggleExpanded() {
-            tableColumn.toggleExpanded(tableRow.getIndex());
+            SimpleBooleanProperty expanded = expandedProperty();
+            expanded.setValue(!expanded.getValue());
         }
 
         public Boolean isExpanded() {
@@ -93,6 +115,10 @@ public class TableRowExpander<S> {
 
         public void setExpanded(Boolean expanded) {
             expandedProperty().setValue(expanded);
+        }
+
+        public S getValue() {
+            return value;
         }
 
     }
