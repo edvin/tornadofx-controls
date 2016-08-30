@@ -31,6 +31,7 @@ public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
         private Button button = new Button();
 
         public ToggleCell() {
+            button.setFocusTraversable(false);
             button.getStyleClass().add(EXPANDER_BUTTON_STYLE_CLASS);
             button.setPrefSize(16, 16);
             button.setPadding(new Insets(0));

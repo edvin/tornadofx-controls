@@ -48,6 +48,7 @@ public class TableRowExpanderDemo extends Application {
             return form;
         });
 
+
         /*
         // Uncomment to use a custom toggle cell implementation
         ExpanderTableColumn<Customer> expanderColumn = expander.getExpanderColumn();

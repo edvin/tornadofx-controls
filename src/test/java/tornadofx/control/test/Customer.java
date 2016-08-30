@@ -83,4 +83,9 @@ public class Customer {
         customer.setRegistered(LocalDate.now().minusYears(2));
 		return customer;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer #" + id.getValue();
+	}
 }
