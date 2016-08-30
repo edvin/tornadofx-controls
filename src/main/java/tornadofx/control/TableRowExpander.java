@@ -18,10 +18,6 @@ public class TableRowExpander<S> {
     private TableView<S> tableView;
     private Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder;
 
-    public ExpanderTableColumn<S> getExpanderColumn() {
-        return this.expanderColumn;
-    }
-
     /**
      * Returns a Boolean property that can be used to manipulate the expanded state for a row
      * corresponding to the given item value.
@@ -33,6 +29,10 @@ public class TableRowExpander<S> {
         SimpleBooleanProperty value = expansionState.get(item);
         if (value == null) {
             value = new SimpleBooleanProperty(item, "expanded", false) {
+                /**
+                 * When the expanded state change we refresh the tableview.
+                 * If the expanded state changes to false we remove the cached expanded node.
+                 */
                 @Override
                 protected void invalidated() {
                     tableView.refresh();
@@ -57,10 +57,32 @@ public class TableRowExpander<S> {
         });
     }
 
+    /**
+     * Return the expanded node for the given item, if it exists.
+     *
+     * @param item The item corresponding to a table row
+     * @return The expanded node, if it exists.
+     */
     public Node getExpandedNode(S item) {
         return expandedNodeCache.get(item);
     }
 
+    /**
+     * Return the ExpanderTableColumn. You can install a custom cellFactory to override the default
+     * +/- button or further customize the column from here.
+     *
+     * @return The table column containing the expander button, already inserted at column position 0.
+     */
+    public ExpanderTableColumn<S> getExpanderColumn() {
+        return this.expanderColumn;
+    }
+
+    /**
+     * Get or create and cache the expanded node for a given item.
+     *
+     * @param tableRow The table row, used to find the item index
+     * @return The expanded node for the given item
+     */
     public Node getOrCreateExpandedNode(TableRow<S> tableRow) {
         int index = tableRow.getIndex();
         if (index > -1 && index < tableView.getItems().size()) {
@@ -75,6 +97,16 @@ public class TableRowExpander<S> {
         return null;
     }
 
+    /**
+     * Install a row epander on the given TableView. A column contaning a button to toggle the
+     * expanded state of a row is inserted at position 0 in the TableView's columns list.
+     *
+     * @param tableView The TableView to add a row epxander to
+     * @param expandedNodeBuilder A callback used to create the expanded node for the given item/table row
+     * @param <S> The type of items in the TableView
+     * @return A TableRowExpander which can be used to further customize the expander, for example by adding a custom
+     * cell factory to the expanderColumn.
+     */
     public static <S> TableRowExpander<S> install(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
         return new TableRowExpander<>(tableView, expandedNodeBuilder);
     }
