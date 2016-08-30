@@ -20,8 +20,12 @@ public class ExpanderTableColumn<S> extends TableColumn<S, Boolean> {
 
         // The value of this column is the expanded state of the current row
         setCellValueFactory(param -> {
-            if (param.getValue() == null) return null;
-            return expansionState.putIfAbsent(param.getValue(), new SimpleBooleanProperty(false));
+            SimpleBooleanProperty value = expansionState.get(param.getValue());
+            if (value == null) {
+                value = new SimpleBooleanProperty(false);
+                expansionState.put(param.getValue(), value);
+            }
+            return value;
         });
 
         setCellFactory(param -> new ToggleCell());
