@@ -11,6 +11,32 @@ import tornadofx.control.skin.ExpandableTableRowSkin;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The TableRowExpander adds the ability to expand a TableRow by presenting a custom node that can be used to
+ * further edit or present the data for the row.
+ *
+ * Example:
+ *
+ * <pre>
+ * TableRowExpander.install(tableView, param -> {
+ *     CustomEditor editor = new CustomEditor(param.getValue());
+ *     Button save = new Button("Save");
+ *     save.setOnAction(event -> param.toggleExpanded());
+ *     editor.children.add(save);
+ *     return editor;
+ * });
+ * </pre>
+ *
+ * If the node you return doesn't provide a reasonable prefHeight, you might want to configure that explicitly.
+ * For example, if you embed another TableView as the row expander node, you will most likely want to constrain
+ * the maximum size of the secondary table.
+ *
+ * You can customize the toggle button by assigning the result of the *install* call to a variable and calling
+ * {@link TableRowExpander#getExpanderColumn()} to access the toggle button column. You can provide a custom cellFactory
+ * and call {@link ExpanderTableColumn#toggleExpanded(int) toggleExpanded(index)} to open and close the row expander for the current table row.
+ *
+ * @param <S> The type of items in the TableView
+ */
 public class TableRowExpander<S> {
     private final ExpanderTableColumn<S> expanderColumn;
     private final Map<S, Node> expandedNodeCache = new HashMap<>();
@@ -44,7 +70,13 @@ public class TableRowExpander<S> {
         return value;
     }
 
-    public TableRowExpander(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
+    /**
+     * Construct a new TableRowExpander and insert the expander table column at column position 0 in the TableView.
+     *
+     * @param tableView The TableView to install the row expander on
+     * @param expandedNodeBuilder The callback used to create the custom editor node when a given row is expanded
+     */
+    private TableRowExpander(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
         this.tableView = tableView;
         this.expandedNodeBuilder = expandedNodeBuilder;
         expanderColumn = new ExpanderTableColumn<>(this);
