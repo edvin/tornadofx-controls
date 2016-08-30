@@ -74,9 +74,9 @@ public class Customer {
         this.registered.set(registered);
     }
 
-    public static Customer createSample() {
+    public static Customer createSample(Integer id) {
 		Customer customer = new Customer();
-		customer.setId(555);
+		customer.setId(id);
 		customer.setUsername("john@doe.com");
 		customer.setZip("10001");
 		customer.setCity("New York");

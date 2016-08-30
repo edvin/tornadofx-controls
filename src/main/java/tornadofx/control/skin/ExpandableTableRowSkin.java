@@ -3,31 +3,32 @@ package tornadofx.control.skin;
 import com.sun.javafx.scene.control.skin.TableRowSkin;
 import javafx.scene.Node;
 import javafx.scene.control.TableRow;
-import javafx.util.Callback;
 import tornadofx.control.ExpanderTableColumn;
-import tornadofx.control.TableRowExpander.TableRowDataFeatures;
+import tornadofx.control.TableRowExpander;
 
 public class ExpandableTableRowSkin<S> extends TableRowSkin<S> {
+    private TableRowExpander<S> expander;
     private final TableRow<S> tableRow;
-    private final Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder;
-    private final ExpanderTableColumn<S> expanderColumn;
-    private Node content;
+    private ExpanderTableColumn<S> expanderColumn;
     private Double tableRowPrefHeight = -1D;
 
-    public ExpandableTableRowSkin(TableRow<S> tableRow, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder, ExpanderTableColumn<S> expanderColumn) {
+    public ExpandableTableRowSkin(TableRowExpander<S> expander, TableRow<S> tableRow, ExpanderTableColumn<S> expanderColumn) {
         super(tableRow);
+        this.expander = expander;
         this.tableRow = tableRow;
-        this.expandedNodeBuilder = expandedNodeBuilder;
         this.expanderColumn = expanderColumn;
+        tableRow.itemProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue != null) {
+                Node expandedNode = expander.getExpandedNode(oldValue);
+                if (expandedNode != null) getChildren().remove(expandedNode);
+            }
+        });
     }
 
     private Node getContent() {
-        if (content == null) {
-            TableRowDataFeatures<S> features = new TableRowDataFeatures<>(tableRow, expanderColumn, getSkinnable().getItem());
-            content = expandedNodeBuilder.call(features);
-            getChildren().add(content);
-        }
-        return content;
+        Node node = expander.getOrCreateExpandedNode(tableRow);
+        if (!getChildren().contains(node)) getChildren().add(node);
+        return node;
     }
 
     public Boolean isExpanded() {

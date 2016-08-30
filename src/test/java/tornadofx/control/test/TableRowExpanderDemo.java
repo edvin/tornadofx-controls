@@ -14,7 +14,8 @@ import java.time.LocalDate;
 public class TableRowExpanderDemo extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList(Customer.createSample(), Customer.createSample()));
+        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList());
+        for (int i = 0; i < 2000; i++) tableView.getItems().add(Customer.createSample(i));
         tableView.setEditable(true);
 
         TableColumn<Customer, String> username = new TableColumn<>("Username");
@@ -31,7 +32,7 @@ public class TableRowExpanderDemo extends Application {
             Customer customer = param.getValue();
             Form form = new Form();
             form.setPadding(new Insets(20));
-            Fieldset fieldset = form.fieldset("Edit customer");
+            Fieldset fieldset = form.fieldset("Edit customer " + param.getValue().getId());
 
             TextField usernameField = new TextField();
             usernameField.textProperty().bindBidirectional(customer.usernameProperty());

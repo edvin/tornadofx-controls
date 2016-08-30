@@ -13,7 +13,7 @@ import tornadofx.property.DirtyState;
 
 public class FormDemo extends Application {
 	public void start(Stage stage) throws Exception {
-		Customer customer = Customer.createSample();
+		Customer customer = Customer.createSample(555);
 		DirtyState dirtyState = new DirtyState(customer);
 
 		Form form = new Form();

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public class DatePickerCellDemo extends Application {
     public void start(Stage stage) throws Exception {
-        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList(Customer.createSample()));
+        TableView<Customer> tableView = new TableView<>(FXCollections.observableArrayList(Customer.createSample(555)));
         tableView.setEditable(true);
 
         TableColumn<Customer, String> username = new TableColumn<>("Username");
