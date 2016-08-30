@@ -79,7 +79,7 @@ public class TableRowExpander<S> {
     private TableRowExpander(TableView<S> tableView, Callback<TableRowDataFeatures<S>, Node> expandedNodeBuilder) {
         this.tableView = tableView;
         this.expandedNodeBuilder = expandedNodeBuilder;
-        expanderColumn = new ExpanderTableColumn<>(this);
+        this.expanderColumn = new ExpanderTableColumn<>(this);
         tableView.getColumns().add(0, expanderColumn);
         tableView.setRowFactory(param -> new TableRow<S>() {
             @Override
