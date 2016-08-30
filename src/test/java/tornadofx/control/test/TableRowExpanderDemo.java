@@ -5,8 +5,12 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import tornadofx.control.*;
+import tornadofx.control.DatePickerTableCell;
+import tornadofx.control.Fieldset;
+import tornadofx.control.Form;
+import tornadofx.control.TableRowExpanderColumn;
 
 import java.time.LocalDate;
 
@@ -18,17 +22,7 @@ public class TableRowExpanderDemo extends Application {
         for (int i = 0; i < 2000; i++) tableView.getItems().add(Customer.createSample(i));
         tableView.setEditable(true);
 
-        TableColumn<Customer, String> username = new TableColumn<>("Username");
-        username.setCellValueFactory(param -> param.getValue().usernameProperty());
-
-        TableColumn<Customer, LocalDate> registered = new TableColumn<>("Registered");
-        registered.setCellValueFactory(param -> param.getValue().registeredProperty());
-        registered.setCellFactory(DatePickerTableCell.forTableColumn());
-        registered.setPrefWidth(150);
-
-        tableView.getColumns().addAll(username, registered);
-
-        TableRowExpander.install(tableView, param -> {
+        new TableRowExpanderColumn<>(tableView, param -> {
             Customer customer = param.getValue();
             Form form = new Form();
             form.setPadding(new Insets(20));
@@ -48,10 +42,21 @@ public class TableRowExpanderDemo extends Application {
             return form;
         });
 
+        TableColumn<Customer, String> username = new TableColumn<>("Username");
+        username.setCellValueFactory(param -> param.getValue().usernameProperty());
+
+        TableColumn<Customer, LocalDate> registered = new TableColumn<>("Registered");
+        registered.setCellValueFactory(param -> param.getValue().registeredProperty());
+        registered.setCellFactory(DatePickerTableCell.forTableColumn());
+        registered.setPrefWidth(150);
+
+        tableView.getColumns().addAll(username, registered);
+
+
 
         /*
         // Uncomment to use a custom toggle cell implementation
-        ExpanderTableColumn<Customer> expanderColumn = expander.getExpanderColumn();
+        TableRowExpanderColumn<Customer> expanderColumn = expander.getExpanderColumn();
         expanderColumn.setPrefWidth(75);
         expanderColumn.setCellFactory(param -> new MyCustomToggleCell<>(expanderColumn));
         */
@@ -63,7 +68,7 @@ public class TableRowExpanderDemo extends Application {
 public class MyCustomToggleCell<S> extends TableCell<S, Boolean> {
     private Button button = new Button();
 
-    public MyCustomToggleCell(ExpanderTableColumn<S> column) {
+    public MyCustomToggleCell(TableRowExpanderColumn<S> column) {
         button.setOnAction(event -> column.toggleExpanded(getIndex()));
     }
 

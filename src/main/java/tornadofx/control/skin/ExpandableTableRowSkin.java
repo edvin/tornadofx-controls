@@ -3,23 +3,20 @@ package tornadofx.control.skin;
 import com.sun.javafx.scene.control.skin.TableRowSkin;
 import javafx.scene.Node;
 import javafx.scene.control.TableRow;
-import tornadofx.control.ExpanderTableColumn;
-import tornadofx.control.TableRowExpander;
+import tornadofx.control.TableRowExpanderColumn;
 
 public class ExpandableTableRowSkin<S> extends TableRowSkin<S> {
-    private TableRowExpander<S> expander;
     private final TableRow<S> tableRow;
-    private ExpanderTableColumn<S> expanderColumn;
+    private TableRowExpanderColumn<S> expander;
     private Double tableRowPrefHeight = -1D;
 
-    public ExpandableTableRowSkin(TableRowExpander<S> expander, TableRow<S> tableRow, ExpanderTableColumn<S> expanderColumn) {
+    public ExpandableTableRowSkin(TableRow<S> tableRow, TableRowExpanderColumn<S> expander) {
         super(tableRow);
-        this.expander = expander;
         this.tableRow = tableRow;
-        this.expanderColumn = expanderColumn;
+        this.expander = expander;
         tableRow.itemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                Node expandedNode = expander.getExpandedNode(oldValue);
+                Node expandedNode = this.expander.getExpandedNode(oldValue);
                 if (expandedNode != null) getChildren().remove(expandedNode);
             }
         });
@@ -32,7 +29,7 @@ public class ExpandableTableRowSkin<S> extends TableRowSkin<S> {
     }
 
     public Boolean isExpanded() {
-        return getSkinnable().getItem() != null && expanderColumn.getCellData(getSkinnable().getIndex());
+        return getSkinnable().getItem() != null && expander.getCellData(getSkinnable().getIndex());
     }
 
     @Override
