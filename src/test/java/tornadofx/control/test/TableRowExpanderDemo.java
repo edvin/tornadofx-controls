@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tornadofx.control.DatePickerTableCell;
 import tornadofx.control.Fieldset;

@@ -135,6 +135,21 @@ public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
         tableView.getColumns().add(this);
     }
 
+    /**
+     * Create a row expander column that can be added to the TableView list of columns.
+     *
+     * The expandedNodeCallback is expected to return a Node representing the editor that should appear below the
+     * table row when the toggle button within the expander column is clicked.
+     *
+     * Once this column is assigned to a TableView, it will automatically install a custom row factory for the TableView
+     * so that it can configure a TableRow with the {@link ExpandableTableRowSkin}. It is within the skin that the actual
+     * rendering of the expanded node occurs.
+     *
+     * @see TableRowExpanderColumn
+     * @see TableRowDataFeatures
+     *
+     * @param expandedNodeCallback
+     */
     public TableRowExpanderColumn(Callback<TableRowDataFeatures<S>, Node> expandedNodeCallback) {
         this.expandedNodeCallback = expandedNodeCallback;
 
@@ -145,7 +160,7 @@ public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
     }
 
     /**
-     * Install the row factory on the TableView when this column is assigned to a TableView
+     * Install the row factory on the TableView when this column is assigned to a TableView.
      */
     private void installRowFactoryOnTableViewAssignment() {
         tableViewProperty().addListener((observable, oldValue, newValue) -> {
@@ -160,7 +175,13 @@ public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
         });
     }
 
-    private class ToggleCell extends TableCell<S, Boolean> {
+    /**
+     * The default toggle cell creates a button with a + or - sign as the text,
+     * depending on the expanded state of the row it represents.
+     *
+     * You can use this as a starting point to implement a custom toggle cell.
+     */
+    private final class ToggleCell extends TableCell<S, Boolean> {
         private Button button = new Button();
 
         public ToggleCell() {
@@ -193,6 +214,17 @@ public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
         expanded.setValue(!expanded.getValue());
     }
 
+    /**
+     * This object is passed to the expanded node callback when it is time to create a Node to represent the
+     * expanded editor of a certain row. The most important method is {@link #getValue()}} which returns the
+     * object represented by the current row.
+     *
+     * Further more, the {@link #expandedProperty()} returns a boolean property indicating the current expansion
+     * state of the current row. You can use this, or the {@link #toggleExpanded()} method to toggle and inspect
+     * the expanded state of the row, for example if you want an action inside the row editor to contract the editor.
+     *
+     * @param <S> The type of items in the TableView
+     */
     public static class TableRowDataFeatures<S> {
         private TableRow<S> tableRow;
         private TableRowExpanderColumn<S> tableColumn;
@@ -206,31 +238,69 @@ public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
             this.value = value;
         }
 
+        /**
+         * Return the current TableRow. It is safe to assume that the index returned by {@link TableRow#getIndex()} is
+         * correct as long as you use it for the initial node creation. It is not safe to trust the result of this call
+         * at any later time, for example in a button action within the row editor.
+         *
+         * @return The current TableRow
+         */
         public TableRow<S> getTableRow() {
             return tableRow;
         }
 
+        /**
+         * Return the TableColumn which contains the toggle button. Normally you would not need to use this directly,
+         * but rather consult the {@link #expandedProperty()} for inspection and mutation of the toggled state of this row.
+         *
+         * @return The TableColumn which contains the toggle button
+         */
         public TableRowExpanderColumn<S> getTableColumn() {
             return tableColumn;
         }
 
+        /**
+         * The expanded property can be used to inspect or mutate the toggled state of this row editor. You can also
+         * listen for changes to it's state if needed.
+         *
+         * @return The expanded property
+         */
         public SimpleBooleanProperty expandedProperty() {
             return expandedProperty;
         }
 
+        /**
+         * Toggle the expanded state of this row editor.
+         */
         public void toggleExpanded() {
             SimpleBooleanProperty expanded = expandedProperty();
             expanded.setValue(!expanded.getValue());
         }
 
+        /**
+         * Returns a boolean indicating if the current row is expanded or not
+         *
+         * @return A boolean indicating the expanded state of the current editor
+         */
         public Boolean isExpanded() {
             return expandedProperty().getValue();
         }
 
+        /**
+         * Set the expanded state. This will update the {@link #expandedProperty()} accordingly.
+         *
+         * @param expanded Wheter the row editor should be expanded or not
+         */
         public void setExpanded(Boolean expanded) {
             expandedProperty().setValue(expanded);
         }
 
+        /**
+         * The value represented by the current table row. It is important that the value has valid equals/hashCode
+         * methods, as the row value is used to keep track of the node editor for each row.
+         *
+         * @return The value represented by the current table row
+         */
         public S getValue() {
             return value;
         }
