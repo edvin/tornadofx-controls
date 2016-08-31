@@ -83,4 +83,24 @@ public class Customer {
         customer.setRegistered(LocalDate.now().minusYears(2));
 		return customer;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer #" + id.getValue();
+	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        return id.getValue().equals(customer.id.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
