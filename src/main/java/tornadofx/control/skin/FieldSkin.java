@@ -67,7 +67,7 @@ public class FieldSkin extends SkinBase<Field> {
 
                 field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), labelHeight);
 
-                double restHeight = labelHeight - contentHeight;
+                double restHeight = contentHeight - labelHeight;
 
                 field.getInputContainer().resizeRelocate(contentX, contentY + labelHeight, contentWidth, restHeight);
             } else {
