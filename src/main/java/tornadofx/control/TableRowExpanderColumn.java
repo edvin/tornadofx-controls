@@ -15,12 +15,12 @@ import java.util.Map;
  * The column itself contains a toggle button that on click will show an editor for the current row right below the
  * columns. Example:
  *
- * <pre>
- * TableRowExpanderColumn&lt;Customer> expander = new TableRowExpanderColumn&lt;>(param -> {
+ * &lt;pre&gt;
+ * TableRowExpanderColumn&lt;Customer&gt; expander = new TableRowExpanderColumn&lt;&gt;(param -&gt; {
  *     HBox editor = new HBox(10);
  *     TextField text = new TextField(param.getValue().getName());
  *     Button save = new Button("Save customer");
- *     save.setOnAction(event -> {
+ *     save.setOnAction(event -&gt; {
  *         save();
  *         param.toggleExpanded();
  *     });
@@ -29,17 +29,17 @@ import java.util.Map;
  * });
  *
  * tableView.getColumns().add(expander);
- * </pre>
+ * &lt;/pre&gt;
  *
  * You can provide a custom cellFactory to customize the toggle button. A typical custom toggle cell implementation
  * would look like this:
  *
- * <pre>
- * public class MyCustomToggleCell&lt;S> extends TableCell&lt;S, Boolean> {
+ * &lt;pre&gt;
+ * public class MyCustomToggleCell&lt;S&gt; extends TableCell&lt;S, Boolean&gt; {
  *     private Button button = new Button();
  *
- *     public MyCustomToggleCell(TableRowExpanderColumn&lt;S> column) {
- *         button.setOnAction(event -> column.toggleExpanded(getIndex()));
+ *     public MyCustomToggleCell(TableRowExpanderColumn&lt;S&gt; column) {
+ *         button.setOnAction(event -&gt; column.toggleExpanded(getIndex()));
  *     }
  *
  *     protected void updateItem(Boolean expanded, boolean empty) {
@@ -52,7 +52,7 @@ import java.util.Map;
  *         }
  *     }
  * }
- * </pre>
+ * &lt;/pre&gt;
  *
  * The custom toggle cell utilizes the {@link TableRowExpanderColumn#toggleExpanded(int)} method to toggle
  * the row expander.
