@@ -10,10 +10,10 @@ public class Form extends VBox {
 		getStyleClass().add("form");
 	}
 
-	public double getLabelContainerWidth() {
+	public double getLabelContainerWidth(Double height) {
         return getFieldsets().flatMap(Fieldset::getFields)
                 .map(Field::getLabelContainer)
-                .mapToDouble(f -> f.prefWidth(-1))
+                .mapToDouble(f -> f.prefWidth(height))
                 .max()
                 .orElse(0);
     }

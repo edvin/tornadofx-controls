@@ -11,42 +11,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The TableColumn can be addded to a TableView to provide an expansion toggle button. Clicking the button
- * will expand the area below the given row and display a custom editor for that row. Example:
+ * The TableRowExpanderColumn enables a TableView to provide an expandable editor below each table row.
+ * The column itself contains a toggle button that on click will show an editor for the current row right below the
+ * columns. Example:
  *
- * <pre>
- * new TableRowExpanderColumn&lt;>(tableView, param -> {
+ * &lt;pre&gt;
+ * TableRowExpanderColumn&lt;Customer&gt; expander = new TableRowExpanderColumn&lt;&gt;(param -&gt; {
  *     HBox editor = new HBox(10);
- *     TextField text = new TextField(param.getValue().getUsername());
- *     Button save = new Button("Save");
- *     save.setOnAction(event -> {
+ *     TextField text = new TextField(param.getValue().getName());
+ *     Button save = new Button("Save customer");
+ *     save.setOnAction(event -&gt; {
  *         save();
  *         param.toggleExpanded();
  *     });
  *     editor.getChildren().addAll(text, save);
  *     return editor;
  * });
- * </pre>
  *
- * You can insert the expander column manually at any position as well:
- *
- * <pre>
- *     TableRowExpanderColumn expander = new TableRowExpanderColumn&lt;Customer>(param -> {
- *          // Create and return editor here
- *     });
- *
- *     tableView.getColumns().add(expander);
- * </pre>
+ * tableView.getColumns().add(expander);
+ * &lt;/pre&gt;
  *
  * You can provide a custom cellFactory to customize the toggle button. A typical custom toggle cell implementation
  * would look like this:
  *
- * <pre>
- * public class MyCustomToggleCell&lt;S> extends TableCell&lt;S, Boolean> {
+ * &lt;pre&gt;
+ * public class MyCustomToggleCell&lt;S&gt; extends TableCell&lt;S, Boolean&gt; {
  *     private Button button = new Button();
  *
- *     public MyCustomToggleCell(TableRowExpanderColumn&lt;S> column) {
- *         button.setOnAction(event -> column.toggleExpanded(getIndex()));
+ *     public MyCustomToggleCell(TableRowExpanderColumn&lt;S&gt; column) {
+ *         button.setOnAction(event -&gt; column.toggleExpanded(getIndex()));
  *     }
  *
  *     protected void updateItem(Boolean expanded, boolean empty) {
@@ -59,14 +52,14 @@ import java.util.Map;
  *         }
  *     }
  * }
- * </pre>
+ * &lt;/pre&gt;
  *
  * The custom toggle cell utilizes the {@link TableRowExpanderColumn#toggleExpanded(int)} method to toggle
  * the row expander.
  *
  * @param <S> The item type of the TableView
  */
-public class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
+public final class TableRowExpanderColumn<S> extends TableColumn<S, Boolean> {
     private static final String STYLE_CLASS = "expander-column";
     private static final String EXPANDER_BUTTON_STYLE_CLASS = "expander-button";
 

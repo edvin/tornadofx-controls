@@ -5,6 +5,7 @@ import tornadofx.control.Field;
 import tornadofx.control.Fieldset;
 
 import static javafx.geometry.Orientation.HORIZONTAL;
+import static javafx.geometry.Orientation.VERTICAL;
 
 public class FieldSkin extends SkinBase<Field> {
     public FieldSkin(Field control) {
@@ -16,10 +17,10 @@ public class FieldSkin extends SkinBase<Field> {
         Fieldset fieldset = field.getFieldset();
         boolean labelHasContent = field.getText() != null;
 
-        double labelWidth = labelHasContent ? field.getFieldset().getForm().getLabelContainerWidth() : 0;
+        double labelWidth = labelHasContent ? field.getFieldset().getForm().getLabelContainerWidth(height) : 0;
         double inputWidth = field.getInputContainer().prefWidth(height);
 
-        if (fieldset.getOrientation() == HORIZONTAL)
+        if (fieldset.getOrientation() == VERTICAL)
             return Math.max(labelWidth, inputWidth) + leftInset + rightInset;
 
         return labelWidth + inputWidth + leftInset + rightInset;
@@ -48,7 +49,7 @@ public class FieldSkin extends SkinBase<Field> {
         Fieldset fieldset = field.getFieldset();
         boolean labelHasContent = field.getText() != null;
 
-        double labelWidth = field.getFieldset().getForm().getLabelContainerWidth();
+        double labelWidth = field.getFieldset().getForm().getLabelContainerWidth(contentHeight);
 	    if (fieldset.getOrientation() == HORIZONTAL) {
             if (labelHasContent) {
                 field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), contentHeight);
@@ -67,7 +68,7 @@ public class FieldSkin extends SkinBase<Field> {
 
                 field.getLabelContainer().resizeRelocate(contentX, contentY, Math.min(labelWidth, contentWidth), labelHeight);
 
-                double restHeight = labelHeight - contentHeight;
+                double restHeight = contentHeight - labelHeight;
 
                 field.getInputContainer().resizeRelocate(contentX, contentY + labelHeight, contentWidth, restHeight);
             } else {
