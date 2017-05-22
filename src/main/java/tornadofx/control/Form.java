@@ -1,5 +1,6 @@
 package tornadofx.control;
 
+import javafx.geometry.Orientation;
 import javafx.scene.layout.VBox;
 
 import java.util.stream.Stream;
@@ -11,9 +12,9 @@ public class Form extends VBox {
 	}
 
 	public double getLabelContainerWidth(Double height) {
-        return getFieldsets().flatMap(Fieldset::getFields)
+        return getFieldsets().flatMap(fs->fs.getFields().stream())
                 .map(Field::getLabelContainer)
-                .mapToDouble(f -> f.prefWidth(height))
+                .mapToDouble(f -> f.prefWidth(-height))
                 .max()
                 .orElse(0);
     }
@@ -34,9 +35,19 @@ public class Form extends VBox {
 		return fieldset;
 	}
 
+	public Fieldset fieldset(String text, Orientation labelPosition ){
+		Fieldset fieldset = new Fieldset( text, labelPosition );
+		getChildren().add(fieldset);
+		return fieldset;
+	}
+
 	public Fieldset fieldset() {
 		Fieldset fieldset = new Fieldset();
 		getChildren().add(fieldset);
 		return fieldset;
+	}
+
+	public void add( Fieldset fieldset ){
+		getChildren().add(fieldset);
 	}
 }

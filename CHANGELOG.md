@@ -1,5 +1,14 @@
 # Change Log
 
+## [1.0.6]
+
+- Synchronized feature set with TornadoFx (Kotlin)
+  - fieldset orientation has been deprecated (now labelPosition)
+  - fieldset now supports nested fields
+  - fields now support orientation to allow for vertical growth
+  - mneumonic support (setting labelFor) for field labels
+  - added ButtonBarField
+
 ## [1.0.5]
 
 - Changed NaviSelect to render as dropdown with button, the previous look confused people into thinking it was editable as a text field
