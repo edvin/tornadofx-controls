@@ -1,14 +1,14 @@
 package tornadofx.control;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.DatePicker;
 import javafx.util.StringConverter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * A DateTimePicker with configurable datetime format where both date and time can be changed
@@ -48,8 +48,17 @@ public class DateTimePicker extends DatePicker {
 
 		// Syncronize changes to dateTimeValue back to the underlying date value
 		dateTimeValue.addListener((observable, oldValue, newValue) -> {
-			setValue(newValue == null ? null : newValue.toLocalDate());
-		});
+            if (newValue != null) {
+                LocalDate dateValue = newValue.toLocalDate();
+                boolean forceUpdate = dateValue.equals(valueProperty().get());
+                // Make sure the display is updated even when the date itself wasn't changed
+                setValue(dateValue);
+                if (forceUpdate) setConverter(new InternalConverter());
+            } else {
+                setValue(null);
+            }
+
+        });
 
 		// Persist changes onblur
 		getEditor().focusedProperty().addListener((observable, oldValue, newValue) -> {
