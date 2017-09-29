@@ -20,7 +20,6 @@ public class DateTimeDemo extends Application {
 
 		DateTimePicker picker = new DateTimePicker();
 		picker.setDateTimeValue(LocalDateTime.now());
-
 		fieldset.field("Choose date", picker);
 
 		TextField label = new TextField();

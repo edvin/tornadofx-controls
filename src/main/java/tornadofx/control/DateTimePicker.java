@@ -27,10 +27,15 @@ public class DateTimePicker extends DatePicker {
 		}
 	};
 
+	public void alignColumnCountWithFormat() {
+		getEditor().setPrefColumnCount(getFormat().length());
+	}
+
 	public DateTimePicker() {
 		getStyleClass().add("datetime-picker");
 		setFormat(DefaultFormat);
 		setConverter(new InternalConverter());
+		alignColumnCount();
 
 		// Syncronize changes to the underlying date value back to the dateTimeValue
 		valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -94,6 +99,7 @@ public class DateTimePicker extends DatePicker {
 
 	public void setFormat(String format) {
 		this.format.set(format);
+		alignColumnCount();
 	}
 
 	class InternalConverter extends StringConverter<LocalDate> {
