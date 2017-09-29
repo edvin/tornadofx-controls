@@ -35,7 +35,7 @@ public class DateTimePicker extends DatePicker {
 		getStyleClass().add("datetime-picker");
 		setFormat(DefaultFormat);
 		setConverter(new InternalConverter());
-		alignColumnCount();
+        alignColumnCountWithFormat();
 
 		// Syncronize changes to the underlying date value back to the dateTimeValue
 		valueProperty().addListener((observable, oldValue, newValue) -> {
