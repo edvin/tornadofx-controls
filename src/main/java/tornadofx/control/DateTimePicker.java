@@ -99,7 +99,7 @@ public class DateTimePicker extends DatePicker {
 
 	public void setFormat(String format) {
 		this.format.set(format);
-		alignColumnCount();
+		alignColumnCountWithFormat();
 	}
 
 	class InternalConverter extends StringConverter<LocalDate> {
