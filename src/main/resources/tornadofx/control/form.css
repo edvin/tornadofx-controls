@@ -1,3 +1,7 @@
+.form {
+    -fx-padding: 10;
+}
+
 .form .fieldset .label-container {
     -fx-alignment: center-left;
 }
@@ -10,7 +14,7 @@
     -fx-padding: 0 0 3 0;
 }
 
-.form .fieldset .input-container {
+.form .fieldset .input-container:horizontal {
     -fx-alignment: baseline-left;
 }
 
@@ -20,6 +24,20 @@
 
 .form .input-container {
     -fx-spacing: 10;
+}
+
+.form .field {
+    -fx-padding: 5 0;
+}
+
+.form .fieldset .legend {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+    -fx-padding: 0 0 5 0;
+}
+
+.form .fieldset .legend {
+    -fx-graphic-text-gap: 10;
 }
 
 .form .field {

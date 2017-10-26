@@ -3,6 +3,7 @@ package tornadofx.control.test;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
@@ -19,12 +20,15 @@ public class DateTimeDemo extends Application {
 
 		DateTimePicker picker = new DateTimePicker();
 		picker.setDateTimeValue(LocalDateTime.now());
-
 		fieldset.field("Choose date", picker);
 
 		TextField label = new TextField();
 		label.textProperty().bind(picker.dateTimeValueProperty().asString());
 		fieldset.field("Selected value:", label);
+
+		Button setNow = new Button("Set now");
+		setNow.setOnAction(event -> picker.setDateTimeValue(LocalDateTime.now()));
+		fieldset.field("Reset", setNow);
 
 		stage.setScene(new Scene(form, 400, 200));
 		stage.show();
