@@ -1,11 +1,8 @@
 # Change Log
 
-## [1.0.7-SNAPSHOT]
-
-- DateTimePicker updates when only time was changed (https://github.com/edvin/tornadofx-controls/issues/7)
-
 ## [1.0.6]
 
+- DateTimePicker updates when only time was changed (https://github.com/edvin/tornadofx-controls/issues/7)
 - Synchronized feature set with TornadoFx (Kotlin)
   - fieldset orientation has been deprecated (now labelPosition)
   - fieldset now supports nested fields
